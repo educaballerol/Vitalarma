@@ -10,23 +10,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.vitalarma.mobile.model.sampleAlarms
+import com.vitalarma.mobile.ui.screens.alarms.AlarmDetailScreen
 import com.vitalarma.mobile.ui.screens.alarms.AlarmListScreen
 
 /**
- * Versión reducida temporal: solo registra M-04 (AlarmListScreen) para que
- * el proyecto compile mientras terminas de copiar AlarmDetailScreen.kt y
- * DeleteAlarmScreen.kt. Los onAlarmClick/onCreateAlarmClick/onTestCriticalClick
- * no navegan a nada todavía (quedan como no-op) porque esas rutas están
- * comentadas más abajo.
+ * Punto único de navegación de la app.
  *
- * TODO: cuando ya tengas AlarmDetailScreen.kt y DeleteAlarmScreen.kt
- * copiados y con el paquete com.vitalarma.mobile correcto, descomenta las
- * rutas ALARM_DETAIL y ALARM_DELETE_CONFIRM (bloque comentado al final) y
- * restaura los tres callbacks de AlarmListScreen a como estaban antes
- * (navegando con Routes.alarmDetail(...), etc.) en vez de {}.
+ * M-04 y M-05 ya están implementadas con datos reales (ver
+ * ui/screens/alarms/). ALARM_DELETE_CONFIRM sigue en PlaceholderScreen
+ * a propósito: cuando copies DeleteAlarmScreen.kt, reemplaza ese bloque
+ * siguiendo el mismo patrón que ALARM_DETAIL (arguments + backStackEntry
+ * + buscar en sampleAlarms), y agrega el import de DeleteAlarmScreen.
  */
 @Composable
 fun VitalarmaNavHost(
@@ -35,24 +35,22 @@ fun VitalarmaNavHost(
 ) {
     NavHost(navController = navController, startDestination = startDestination) {
 
+        // Auth
+        composable(Routes.LOGIN) { PlaceholderScreen("Login") }
+        composable(Routes.REGISTER) { PlaceholderScreen("Crear cuenta") }
+        composable(Routes.FORGOT_PASSWORD) { PlaceholderScreen("Recuperar contraseña") }
+        composable(Routes.FORGOT_PASSWORD_SENT) { PlaceholderScreen("Enlace enviado") }
+
+        // Alarmas
         composable(Routes.ALARM_LIST) {
             AlarmListScreen(
                 currentRoute = Routes.ALARM_LIST,
-                onNavigate = { /* TODO: reactivar cuando existan Rutinas/Ajustes */ },
-                onAlarmClick = { /* TODO: reactivar cuando exista AlarmDetailScreen */ },
-                onCreateAlarmClick = { /* TODO: reactivar cuando exista el flujo de creación */ },
-                onTestCriticalClick = { /* TODO: reactivar cuando exista M-11 */ }
+                onNavigate = { route -> navController.navigate(route) },
+                onAlarmClick = { alarm -> navController.navigate(Routes.alarmDetail(alarm.id)) },
+                onCreateAlarmClick = { navController.navigate(Routes.ALARM_TYPE_PICKER) },
+                onTestCriticalClick = { navController.navigate(Routes.alarmRinging(sampleAlarms.first().id)) }
             )
         }
-
-        /*
-        // Descomenta este bloque cuando tengas AlarmDetailScreen.kt y
-        // DeleteAlarmScreen.kt copiados en ui/screens/alarms/, y vuelve a
-        // importar androidx.navigation.NavType, androidx.navigation.navArgument,
-        // com.vitalarma.mobile.model.sampleAlarms,
-        // com.vitalarma.mobile.ui.screens.alarms.AlarmDetailScreen y
-        // com.vitalarma.mobile.ui.screens.alarms.DeleteAlarmScreen arriba.
-
         composable(
             route = Routes.ALARM_DETAIL,
             arguments = listOf(navArgument("alarmId") { type = NavType.StringType })
@@ -68,22 +66,34 @@ fun VitalarmaNavHost(
                 onDeleteClick = { navController.navigate(Routes.alarmDeleteConfirm(alarm.id)) }
             )
         }
+        // TODO: reemplazar por DeleteAlarmScreen real cuando lo copies (ver M-06)
         composable(
             route = Routes.ALARM_DELETE_CONFIRM,
             arguments = listOf(navArgument("alarmId") { type = NavType.StringType })
-        ) { backStackEntry ->
-            val alarmId = backStackEntry.arguments?.getString("alarmId")
-            val alarm = sampleAlarms.find { it.id == alarmId } ?: sampleAlarms.first()
-            DeleteAlarmScreen(
-                alarm = alarm,
-                currentRoute = Routes.ALARM_LIST,
-                onNavigate = { route -> navController.navigate(route) },
-                onBackClick = { navController.popBackStack() },
-                onCancelClick = { navController.popBackStack() },
-                onConfirmDeleteClick = { navController.popBackStack(Routes.ALARM_LIST, inclusive = false) }
-            )
-        }
-        */
+        ) { PlaceholderScreen("Eliminar alarma") }
+
+        composable(Routes.ALARM_TYPE_PICKER) { PlaceholderScreen("Escoge un tipo (flujo de creación)") }
+        composable(Routes.ALARM_TIME_PICKER) { PlaceholderScreen("Definir hora") }
+        composable(Routes.ALARM_DETAILS_STEP) { PlaceholderScreen("Detalles") }
+        composable(Routes.ALARM_CREATED) { PlaceholderScreen("Alarma creada") }
+
+        // Ejecución
+        composable(Routes.ALARM_RINGING) { PlaceholderScreen("Alarma sonando") }
+        composable(Routes.ALARM_SCAN_OBJECT) { PlaceholderScreen("Escanea el objeto") }
+        composable(Routes.ALARM_COMPLETED) { PlaceholderScreen("Alarma cumplida") }
+        composable(Routes.BACKUP_TRIGGERED) { PlaceholderScreen("Respaldo activado") }
+
+        // Rutinas
+        composable(Routes.ROUTINE_LIST) { PlaceholderScreen("Rutinas") }
+        composable(Routes.ROUTINE_DETAIL) { PlaceholderScreen("Detalle de rutina") }
+        composable(Routes.ROUTINE_NEW) { PlaceholderScreen("Nueva rutina") }
+        composable(Routes.ROUTINE_DELETE_CONFIRM) { PlaceholderScreen("Eliminar rutina") }
+
+        // Ajustes
+        composable(Routes.SETTINGS) { PlaceholderScreen("Ajustes") }
+        composable(Routes.DEVICES) { PlaceholderScreen("Dispositivos") }
+        composable(Routes.CONTACTS) { PlaceholderScreen("Contactos") }
+        composable(Routes.ACCOUNT) { PlaceholderScreen("Cuenta") }
     }
 }
 
