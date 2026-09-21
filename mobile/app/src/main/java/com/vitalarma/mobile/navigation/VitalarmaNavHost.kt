@@ -18,15 +18,13 @@ import androidx.navigation.navArgument
 import com.vitalarma.mobile.model.sampleAlarms
 import com.vitalarma.mobile.ui.screens.alarms.AlarmDetailScreen
 import com.vitalarma.mobile.ui.screens.alarms.AlarmListScreen
+import com.vitalarma.mobile.ui.screens.alarms.DeleteAlarmScreen
 
 /**
  * Punto único de navegación de la app.
  *
- * M-04 y M-05 ya están implementadas con datos reales (ver
- * ui/screens/alarms/). ALARM_DELETE_CONFIRM sigue en PlaceholderScreen
- * a propósito: cuando copies DeleteAlarmScreen.kt, reemplaza ese bloque
- * siguiendo el mismo patrón que ALARM_DETAIL (arguments + backStackEntry
- * + buscar en sampleAlarms), y agrega el import de DeleteAlarmScreen.
+ * M-04, M-05 y M-06 ya están implementadas con datos reales (ver
+ * ui/screens/alarms/). El resto sigue en PlaceholderScreen.
  */
 @Composable
 fun VitalarmaNavHost(
@@ -66,11 +64,21 @@ fun VitalarmaNavHost(
                 onDeleteClick = { navController.navigate(Routes.alarmDeleteConfirm(alarm.id)) }
             )
         }
-        // TODO: reemplazar por DeleteAlarmScreen real cuando lo copies (ver M-06)
         composable(
             route = Routes.ALARM_DELETE_CONFIRM,
             arguments = listOf(navArgument("alarmId") { type = NavType.StringType })
-        ) { PlaceholderScreen("Eliminar alarma") }
+        ) { backStackEntry ->
+            val alarmId = backStackEntry.arguments?.getString("alarmId")
+            val alarm = sampleAlarms.find { it.id == alarmId } ?: sampleAlarms.first()
+            DeleteAlarmScreen(
+                alarm = alarm,
+                currentRoute = Routes.ALARM_LIST,
+                onNavigate = { route -> navController.navigate(route) },
+                onBackClick = { navController.popBackStack() },
+                onCancelClick = { navController.popBackStack() },
+                onConfirmDeleteClick = { navController.popBackStack(Routes.ALARM_LIST, inclusive = false) }
+            )
+        }
 
         composable(Routes.ALARM_TYPE_PICKER) { PlaceholderScreen("Escoge un tipo (flujo de creación)") }
         composable(Routes.ALARM_TIME_PICKER) { PlaceholderScreen("Definir hora") }

@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Alarm
-import androidx.compose.material.icons.filled.Repeat
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -52,7 +52,7 @@ fun VitalarmaBottomNavBar(
         )
         NavItem(
             label = "Rutinas",
-            icon = Icons.Filled.Repeat,
+            icon = Icons.AutoMirrored.Filled.List,
             selected = currentRoute == Routes.ROUTINE_LIST,
             onClick = { onNavigate(Routes.ROUTINE_LIST) },
             modifier = Modifier.weight(1f)

@@ -13,17 +13,17 @@ del curso de UX Design — Maestría en Ingeniería de Software (MISO).
 
 ## Frameworks y versiones
 
-| Herramienta | Versión |
-|---|---|
-| Kotlin | 2.2.10 |
-| Android Gradle Plugin (AGP) | 9.4.1 |
-| Compose BOM | 2026.02.01 |
-| Navigation Compose | 2.8.4 |
-| Material 3 (Compose) | gestionado por el Compose BOM |
-| Material Icons Extended | gestionado por el Compose BOM |
-| Core KTX | 1.19.0 |
-| Lifecycle Runtime KTX | 2.11.0 |
-| Activity Compose | 1.13.0 |
+| Herramienta                 | Versión                       |
+| --------------------------- | ----------------------------- |
+| Kotlin                      | 2.2.10                        |
+| Android Gradle Plugin (AGP) | 9.4.1                         |
+| Compose BOM                 | 2026.02.01                    |
+| Navigation Compose          | 2.8.4                         |
+| Material 3 (Compose)        | gestionado por el Compose BOM |
+| Material Icons Extended     | gestionado por el Compose BOM |
+| Core KTX                    | 1.19.0                        |
+| Lifecycle Runtime KTX       | 2.11.0                        |
+| Activity Compose            | 1.13.0                        |
 
 Toda la UI está escrita en **Jetpack Compose** (declarativo, sin XML de
 layouts). La gestión de dependencias usa el catálogo de versiones de
@@ -31,6 +31,7 @@ Gradle (`gradle/libs.versions.toml`), no versiones sueltas en
 `build.gradle.kts`.
 
 **Configuración del proyecto:**
+
 - `applicationId` / paquete base: `com.vitalarma.mobile`
 - `minSdk`: 27 (Android 8.1 Oreo) — requisito del curso
 - `targetSdk` / `compileSdk`: 37
@@ -45,7 +46,7 @@ Gradle (`gradle/libs.versions.toml`), no versiones sueltas en
   en el primer sync si falta)
 - Conexión a internet en el primer build (Gradle descarga dependencias)
 
-## Cómo instalar y ejecutar (guía para tutores)
+## Guía de instalación y ejecución
 
 1. **Clonar el repositorio** y abrir la carpeta `mobile/` como proyecto
    en Android Studio (`File > Open`, seleccionar la carpeta `mobile/`,
@@ -87,12 +88,14 @@ app/src/main/java/com/vitalarma/mobile/
 
 ## Pantallas implementadas
 
-| Mockup | Pantalla | Estado |
-|---|---|---|
-| M-04 | Mis alarmas | ✅ Completa |
-| M-05 | Editar alarma | ✅ Completa |
-| M-06b | Escoge un tipo (bottom sheet) | ✅ Completa, integrada en M-05 |
-| M-06 | Eliminar alarma | ⏳ Pendiente (ruta registrada como placeholder) |
+| Mockup | Pantalla                      | Autor   | Estado                         |
+| ------ | ----------------------------- | ------- | ------------------------------ |
+| M-04   | Mis alarmas                   | Eduardo | ✅ Completa                    |
+| M-05   | Editar alarma                 | Eduardo | ✅ Completa                    |
+| M-06   | Eliminar alarma               | Eduardo | ✅ Completa                    |
+| M-06b  | Escoge un tipo (bottom sheet) | Eduardo | ✅ Completa, integrada en M-05 |
+
+<!-- TODO: agregar aquí las filas de las pantallas faltante -->
 
 ## Design system
 
