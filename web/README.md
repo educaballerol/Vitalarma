@@ -52,7 +52,8 @@ src/
     │   └── top-bar/           # BarraSuperior (va en todas las pantallas)
     └── features/
         ├── panel/             # W-04
-        └── area/              # W-05
+        ├── area/              # W-05
+        └── alarmas/           # W-07
 ```
 
 Al agregar una pantalla: un componente en `features/<pantalla>/`, su
@@ -66,7 +67,7 @@ commit por pantalla**.
 | W-04   | Panel de tiempo por área      | W2 · Estadísticas      | ✅     |
 | W-05   | Detalle de un área e histórico | W2 · Estadísticas      | ✅     |
 | W-06   | Exportar reporte (modal)      | W6 · Reportes PDF      | ⬜     |
-| W-07   | Tabla de todas las alarmas    | W3 · Gestión escritorio | ⬜     |
+| W-07   | Tabla de todas las alarmas    | W3 · Gestión escritorio | ✅     |
 | W-08   | Edición masiva                | W3 · Gestión escritorio | ⬜     |
 | W-09   | Crear alarma desde escritorio | W3 · Gestión escritorio | ⬜     |
 | W-10   | Rutinas y bloques             | W7 · Rutinas           | ⬜     |

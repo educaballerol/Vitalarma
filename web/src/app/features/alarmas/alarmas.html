@@ -1,0 +1,126 @@
+<app-top-bar />
+
+<main class="alarmas">
+  <div class="alarmas__encabezado">
+    <div>
+      <h1 class="alarmas__titulo">Alarmas</h1>
+      <p class="alarmas__resumen">
+        {{ total }} alarmas en total &nbsp;·&nbsp; {{ activas }} activas
+      </p>
+    </div>
+
+    <button type="button" class="boton boton--primario">+ Nueva alarma</button>
+  </div>
+
+  <div class="filtros">
+    <label class="filtro filtro--busqueda">
+      <span class="solo-lectores">Buscar por título</span>
+      <input
+        type="search"
+        placeholder="Buscar por título"
+        [value]="busqueda()"
+        (input)="escribirBusqueda($event)"
+      />
+    </label>
+
+    <label class="filtro">
+      <span class="solo-lectores">Filtrar por tipo</span>
+      <select (change)="elegirTipo($event)">
+        <option value="" [selected]="filtroTipo() === ''">Tipo</option>
+        @for (tipo of tipos; track tipo) {
+          <option [value]="tipo" [selected]="filtroTipo() === tipo">{{ etiquetaTipo[tipo] }}</option>
+        }
+      </select>
+    </label>
+
+    <label class="filtro">
+      <span class="solo-lectores">Filtrar por rutina</span>
+      <select (change)="elegirRutina($event)">
+        <option value="" [selected]="filtroRutina() === ''">Rutina</option>
+        @for (rutina of rutinas; track rutina) {
+          <option [value]="rutina" [selected]="filtroRutina() === rutina">{{ rutina }}</option>
+        }
+      </select>
+    </label>
+
+    <label class="filtro">
+      <span class="solo-lectores">Filtrar por estado</span>
+      <select (change)="elegirEstado($event)">
+        <option value="" [selected]="filtroEstado() === ''">Estado</option>
+        <option value="activa" [selected]="filtroEstado() === 'activa'">Activa</option>
+        <option value="apagada" [selected]="filtroEstado() === 'apagada'">Apagada</option>
+      </select>
+    </label>
+
+    @if (hayFiltros()) {
+      <button type="button" class="filtros__limpiar" (click)="limpiarFiltros()">
+        Quitar filtros
+      </button>
+    }
+  </div>
+
+  <table class="tabla">
+    <caption class="solo-lectores">Todas las alarmas</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="tabla__casilla">
+          <input
+            type="checkbox"
+            [checked]="todasVisiblesMarcadas()"
+            [indeterminate]="algunaVisibleMarcada()"
+            (change)="alternarTodas()"
+            aria-label="Marcar todas las alarmas de la lista"
+          />
+        </th>
+        <th scope="col">Hora</th>
+        <th scope="col">Título</th>
+        <th scope="col">Tipo</th>
+        <th scope="col">Rutina</th>
+        <th scope="col">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (alarma of visibles(); track alarma.id) {
+        <tr [class.es-marcada]="estaMarcada(alarma.id)">
+          <td class="tabla__casilla">
+            <input
+              type="checkbox"
+              [checked]="estaMarcada(alarma.id)"
+              (change)="alternar(alarma.id)"
+              [attr.aria-label]="'Marcar ' + alarma.titulo"
+            />
+          </td>
+          <td class="tabla__hora">{{ alarma.hora }}</td>
+          <td class="tabla__titulo">{{ alarma.titulo }}</td>
+          <td>
+            <span class="tipo">
+              <span class="tipo__punto" [class]="'tipo__punto--' + alarma.tipo"></span>
+              {{ etiquetaTipo[alarma.tipo] }}
+            </span>
+          </td>
+          <td class="tabla__rutina">{{ alarma.rutina }}</td>
+          <td>
+            <span class="activacion" [class]="'activacion--' + alarma.estado">
+              {{ etiquetaActivacion[alarma.estado] }}
+            </span>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="6" class="tabla__vacia">
+            Ninguna alarma coincide con los filtros.
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <p class="pie" aria-live="polite">
+    @if (totalSeleccionadas() === 0) {
+      Ninguna fila seleccionada. Marca las casillas para editar en bloque.
+    } @else {
+      {{ totalSeleccionadas() }}
+      @if (totalSeleccionadas() === 1) { fila seleccionada } @else { filas seleccionadas }
+    }
+  </p>
+</main>
