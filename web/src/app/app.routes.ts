@@ -7,5 +7,10 @@ export const routes: Routes = [
     title: 'Panel de tiempo · Vitalarma',
     loadComponent: () => import('./features/panel/panel').then((m) => m.Panel),
   },
+  {
+    path: 'area/:id',
+    title: 'Detalle de área · Vitalarma',
+    loadComponent: () => import('./features/area/area').then((m) => m.Area),
+  },
   { path: '**', redirectTo: 'panel' },
 ];

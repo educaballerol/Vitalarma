@@ -1,0 +1,115 @@
+<app-top-bar />
+
+<main class="area" [class]="'area--' + detalle().id">
+  <nav class="miga" aria-label="Ruta de navegación">
+    <a routerLink="/panel">Panel</a>
+    <span aria-hidden="true">/</span>
+    <span class="miga__actual">{{ detalle().nombre }}</span>
+  </nav>
+
+  <div class="area__encabezado">
+    <h1 class="area__titulo">{{ detalle().nombre }}</h1>
+    <button type="button" class="boton boton--secundario">Últimas 4 semanas ▾</button>
+  </div>
+
+  <section class="cifras" aria-label="Resumen del periodo">
+    <div class="cifra">
+      <span class="cifra__etiqueta">Total del periodo</span>
+      <strong class="cifra__valor">{{ totalPeriodo() }}<span class="unidad">h</span></strong>
+      <span class="cifra__pie">esta semana</span>
+    </div>
+
+    <div class="cifra">
+      <span class="cifra__etiqueta">Promedio semanal</span>
+      <strong class="cifra__valor">{{ promedioFormateado() }}<span class="unidad">h</span></strong>
+      <span class="cifra__pie">últimas 4 semanas</span>
+    </div>
+
+    <div class="cifra">
+      <span class="cifra__etiqueta">Variación</span>
+      <strong class="cifra__valor">{{ variacionFormateada() }}</strong>
+      <span class="cifra__pie">frente al periodo anterior</span>
+    </div>
+  </section>
+
+  <section class="historico" aria-labelledby="titulo-historico">
+    <h2 id="titulo-historico" class="titulo-seccion">Horas por semana</h2>
+
+    <div class="linea">
+      <div class="linea__eje" aria-hidden="true">
+        @for (marca of marcasEje(); track marca) {
+          <div class="linea__marca">
+            <span class="linea__valor">{{ marca }} h</span>
+            <span class="linea__guia"></span>
+          </div>
+        }
+      </div>
+
+      <div class="linea__plot">
+        <svg class="linea__trazo" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline [attr.points]="trazo()" vector-effect="non-scaling-stroke" />
+        </svg>
+
+        @for (punto of puntos(); track punto.etiqueta) {
+          <div class="punto" [style.left.%]="punto.x" [style.bottom.%]="punto.y">
+            <span class="punto__valor">{{ punto.horas }} h</span>
+            <span class="punto__marca"></span>
+          </div>
+        }
+      </div>
+
+      <div class="linea__semanas" aria-hidden="true">
+        @for (punto of puntos(); track punto.etiqueta) {
+          <span class="linea__semana">{{ punto.etiqueta }}</span>
+        }
+      </div>
+    </div>
+
+    <table class="solo-lectores">
+      <caption>Horas por semana en {{ detalle().nombre }}</caption>
+      <tbody>
+        @for (punto of puntos(); track punto.etiqueta) {
+          <tr>
+            <th scope="row">{{ punto.etiqueta }}</th>
+            <td>{{ punto.horas }} h</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+
+  <section class="alarmas" aria-labelledby="titulo-alarmas">
+    <h2 id="titulo-alarmas" class="titulo-seccion">Alarmas de esta área</h2>
+
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th scope="col">Hora</th>
+          <th scope="col">Título</th>
+          <th scope="col">Tipo</th>
+          <th scope="col">Rutina</th>
+          <th scope="col">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (alarma of detalle().alarmas; track alarma.titulo) {
+          <tr>
+            <td class="tabla__hora">{{ alarma.hora }}</td>
+            <td class="tabla__titulo">{{ alarma.titulo }}</td>
+            <td>{{ alarma.tipo }}</td>
+            <td>{{ alarma.rutina }}</td>
+            <td>
+              <span class="estado" [class]="'estado--' + alarma.estado">
+                {{ etiquetaEstado(alarma.estado) }}
+              </span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <div class="alarmas__acciones">
+      <button type="button" class="boton boton--primario">Exportar reporte</button>
+    </div>
+  </section>
+</main>

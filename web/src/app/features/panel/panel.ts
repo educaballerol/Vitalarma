@@ -1,4 +1,5 @@
 import { Component, computed, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { TopBar } from '../../shared/top-bar/top-bar';
 import {
   ALARMAS_FALLIDAS,
@@ -25,7 +26,7 @@ interface Columna {
 
 @Component({
   selector: 'app-panel',
-  imports: [TopBar],
+  imports: [TopBar, RouterLink],
   templateUrl: './panel.html',
   styleUrl: './panel.scss',
 })

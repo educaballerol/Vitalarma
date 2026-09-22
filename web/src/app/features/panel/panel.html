@@ -14,7 +14,7 @@
 
   <section class="areas" aria-label="Tiempo por área de vida">
     @for (area of areas; track area.id) {
-      <a class="area" [class]="'area--' + area.id" href="#">
+      <a class="area" [class]="'area--' + area.id" [routerLink]="['/area', area.id]">
         <span class="area__nombre">{{ area.nombre }}</span>
 
         <span class="area__cifra">

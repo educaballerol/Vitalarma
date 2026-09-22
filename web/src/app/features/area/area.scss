@@ -1,0 +1,338 @@
+.area {
+  --color-serie: var(--area-trabajo);
+
+  max-width: var(--ancho-maximo);
+  margin: 0 auto;
+  padding: var(--esp-base) var(--margen-lateral) var(--esp-xl);
+
+  &--trabajo { --color-serie: var(--area-trabajo-fuerte); }
+  &--estudio { --color-serie: var(--area-estudio-fuerte); }
+  &--personal { --color-serie: var(--area-personal-fuerte); }
+  &--deporte { --color-serie: var(--area-deporte-fuerte); }
+}
+
+.miga {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-xs);
+  font-size: var(--fs-menor);
+  color: var(--texto-secundario);
+
+  a {
+    color: var(--texto-accion);
+  }
+}
+
+.miga__actual {
+  color: var(--texto-primario);
+}
+
+.area__encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-base);
+  margin: var(--esp-xs) 0 var(--esp-lg);
+}
+
+.area__titulo {
+  font-size: var(--fs-titulo);
+  font-weight: 700;
+  letter-spacing: var(--ls-titulo);
+}
+
+.titulo-seccion {
+  font-size: var(--fs-subtitulo);
+  font-weight: 700;
+  margin-bottom: var(--esp-md);
+}
+
+.boton {
+  height: var(--alto-boton);
+  padding: 0 var(--esp-base);
+  border: 1px solid transparent;
+  border-radius: var(--radio-none);
+  font-family: inherit;
+  font-size: var(--fs-cuerpo);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.boton--secundario {
+  background: var(--fondo-capa-alta);
+  color: var(--texto-primario);
+
+  &:hover {
+    background: var(--gris-30);
+  }
+}
+
+.boton--primario {
+  background: var(--fondo-accion);
+  color: var(--texto-sobre-accion);
+  font-weight: 600;
+
+  &:hover {
+    background: var(--fondo-accion-hover);
+  }
+}
+
+.cifras {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--esp-base);
+  margin-bottom: var(--esp-lg);
+}
+
+.cifra {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-xs);
+  padding: 20px;
+  background: var(--fondo-capa);
+}
+
+.cifra__etiqueta {
+  font-size: var(--fs-etiqueta);
+  font-weight: 700;
+  letter-spacing: var(--ls-etiqueta);
+  text-transform: uppercase;
+  color: var(--texto-secundario);
+}
+
+.cifra__valor {
+  font-family: var(--fuente-mono);
+  font-size: var(--fs-titulo);
+  font-weight: 500;
+  letter-spacing: var(--ls-titulo);
+  line-height: 1.1;
+}
+
+.cifra__pie {
+  font-size: var(--fs-menor);
+  color: var(--texto-secundario);
+}
+
+.unidad {
+  margin-left: 0.2em;
+  font-family: var(--fuente-sans);
+  font-size: 0.55em;
+  font-weight: 400;
+  color: var(--texto-secundario);
+}
+
+.historico {
+  margin-bottom: var(--esp-lg);
+}
+
+.linea {
+  --alto-trazado: 260px;
+  --alto-semanas: 28px;
+
+  position: relative;
+  height: calc(var(--alto-trazado) + var(--alto-semanas));
+  padding-left: 52px;
+}
+
+.linea__eje {
+  position: absolute;
+  top: 0;
+  left: 52px;
+  right: 0;
+  height: var(--alto-trazado);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.linea__marca {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.linea__valor {
+  position: absolute;
+  right: 100%;
+  padding-right: var(--esp-xs);
+  font-family: var(--fuente-mono);
+  font-size: var(--fs-menor);
+  color: var(--texto-terciario);
+  white-space: nowrap;
+}
+
+.linea__guia {
+  flex: 1;
+  height: 1px;
+  background: var(--borde-sutil);
+}
+
+.linea__plot {
+  position: absolute;
+  top: 0;
+  left: 52px;
+  right: 0;
+  height: var(--alto-trazado);
+}
+
+.linea__trazo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+
+  polyline {
+    fill: none;
+    stroke: var(--color-serie);
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+}
+
+.punto {
+  position: absolute;
+  transform: translate(-50%, 50%);
+
+  &:first-of-type .punto__valor {
+    left: 0;
+    transform: none;
+  }
+
+  &:last-of-type .punto__valor {
+    left: auto;
+    right: 0;
+    transform: none;
+  }
+}
+
+.punto__marca {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-serie);
+  box-shadow: 0 0 0 2px var(--fondo-pagina);
+}
+
+.punto__valor {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: var(--esp-xs);
+  font-family: var(--fuente-mono);
+  font-size: var(--fs-menor);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.linea__semanas {
+  position: absolute;
+  left: 52px;
+  right: 0;
+  bottom: 0;
+  height: var(--alto-semanas);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--fs-menor);
+}
+
+.linea__semana {
+  flex: 1;
+  text-align: center;
+
+  &:first-child {
+    text-align: left;
+  }
+
+  &:last-child {
+    text-align: right;
+  }
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-menor);
+
+  thead th {
+    padding: var(--esp-md);
+    text-align: left;
+    font-size: var(--fs-etiqueta);
+    font-weight: 700;
+    letter-spacing: var(--ls-etiqueta);
+    text-transform: uppercase;
+    background: var(--fondo-capa-alta);
+  }
+
+  td {
+    padding: var(--esp-md);
+    border-bottom: 1px solid var(--borde-sutil);
+  }
+
+  tbody tr:nth-child(even) {
+    background: var(--fondo-capa);
+  }
+}
+
+.tabla__hora {
+  font-family: var(--fuente-mono);
+  white-space: nowrap;
+}
+
+.tabla__titulo {
+  font-weight: 600;
+}
+
+.estado {
+  display: inline-block;
+  padding: 2px var(--esp-xs);
+  border-left: 3px solid var(--borde-fuerte);
+
+  &--cumplida {
+    border-left-color: var(--soporte-exito);
+  }
+
+  &--pospuesta {
+    border-left-color: var(--soporte-advertencia);
+  }
+
+  &--fallida {
+    border-left-color: var(--soporte-error);
+  }
+}
+
+.alarmas__acciones {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--esp-base);
+}
+
+@media (max-width: 900px) {
+  .cifras {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .area {
+    padding: var(--esp-md) var(--esp-md) var(--esp-lg);
+  }
+
+  .area__titulo {
+    font-size: var(--fs-seccion);
+  }
+
+  .area__encabezado {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tabla {
+    display: block;
+    overflow-x: auto;
+  }
+}
