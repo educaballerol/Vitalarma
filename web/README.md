@@ -1,59 +1,106 @@
-# VitalarmaWeb
+# Vitalarma — Web
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.8.
+Maquetación en código (frontend web, no funcional) de **Vitalarma**.
+Proyecto del curso de UX Design — Maestría en Ingeniería de Software
+(MISO).
 
-## Development server
+> Este módulo es solo maquetación de interfaz: no hay backend, ni
+> persistencia real, ni lógica de negocio. Los datos que se ven (horas
+> por área, alarmas fallidas) son datos de ejemplo tomados del Figma y
+> viven en `src/app/models/`, tal como lo permiten las condiciones del
+> proyecto.
 
-To start a local development server, run:
+## Frameworks y versiones
 
-```bash
-ng serve
-```
+| Herramienta  | Versión |
+| ------------ | ------- |
+| Angular      | 22.1    |
+| TypeScript   | 6.0     |
+| Node.js      | 24 LTS  |
+| Estilos      | SCSS    |
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Componentes **standalone** con la sintaxis de control de flujo nueva
+(`@for`, `@if`) y `signal()` / `computed()` para el estado. Sin
+librerías de UI ni de gráficas: todo se construye con el design system
+propio.
 
-## Code scaffolding
+## Requisitos e instalación
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+1. Instalar **Node.js 20 o superior** (probado con 24 LTS).
+2. Desde la carpeta `web/`:
 
 ```bash
-ng test
+npm install     # instala dependencias (no están en el repo)
+npm start       # servidor de desarrollo en http://localhost:4200
+npm run build   # compilado de producción en dist/
 ```
 
-## Running end-to-end tests
+`node_modules/` y `dist/` están en `.gitignore`: no se suben. Lo que sí
+se sube es `package-lock.json`, que es lo que garantiza que a todos nos
+instale las mismas versiones.
 
-For end-to-end (e2e) testing, run:
+## Estructura
 
-```bash
-ng e2e
+```
+src/
+├── styles/_tokens.scss        # tokens del design system (colores, tipografía, retícula)
+├── styles.scss                # reset y estilos globales
+└── app/
+    ├── app.routes.ts          # una ruta por pantalla, con su código W-xx
+    ├── models/                # tipos + datos de ejemplo
+    ├── shared/                # componentes usados por varias pantallas
+    │   └── top-bar/           # BarraSuperior (va en todas las pantallas)
+    └── features/
+        └── panel/             # W-04
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Al agregar una pantalla: un componente en `features/<pantalla>/`, su
+ruta en `app.routes.ts` con el código W-xx en el comentario, y **un
+commit por pantalla**.
 
-## Additional Resources
+## Pantallas implementadas
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+| Código | Pantalla                      | Requerimiento          | Estado |
+| ------ | ----------------------------- | ---------------------- | ------ |
+| W-04   | Panel de tiempo por área      | W2 · Estadísticas      | ✅     |
+| W-05   | Detalle de un área e histórico | W2 · Estadísticas      | ⬜     |
+| W-06   | Exportar reporte (modal)      | W6 · Reportes PDF      | ⬜     |
+| W-07   | Tabla de todas las alarmas    | W3 · Gestión escritorio | ⬜     |
+| W-08   | Edición masiva                | W3 · Gestión escritorio | ⬜     |
+| W-09   | Crear alarma desde escritorio | W3 · Gestión escritorio | ⬜     |
+| W-10   | Rutinas y bloques             | W7 · Rutinas           | ⬜     |
+| W-11   | Editor de rutina y horarios   | W7 · Rutinas           | ⬜     |
+
+Las pantallas de login (W-01 a W-03) quedan fuera a propósito: el
+entregable es solo el flujo principal.
+
+## Design system
+
+Los tokens de `src/styles/_tokens.scss` salen del Figma
+(*Design System - Web*, nodo `2105:3858`) y son los mismos que el
+módulo mobile tiene en `ui/theme/Color.kt` y `Type.kt`. **Nunca
+escribas un hex suelto en un componente**: si falta un token, agrégalo
+al archivo con su nombre semántico.
+
+- Paleta: 10 grises estilo Carbon + 9 tonos de naranja a café, con
+  `#F2954A` como primario de acción.
+- Colores semánticos (éxito, advertencia, error, info): reservados para
+  estados del sistema. En Vitalarma además ya significan tipo de alarma,
+  así que **no se usan como decoración ni como color de una serie**.
+- Tipografía: IBM Plex Sans (texto) + IBM Plex Mono (datos numéricos),
+  escala de razón √φ = 1,272 → 10 · 13 · 16 · 20 · 26 · 33 · 42.
+- Esquinas rectas (IBM Carbon), salvo el interruptor (pastilla) y el
+  radio (círculo).
+
+### Nota abierta: la paleta de las cuatro áreas de vida
+
+El design system no tiene una paleta categórica de cuatro tonos, y los
+semánticos están reservados. Las cuatro áreas usan por ahora una rampa
+cálida de cuatro pasos (`naranja-90 / 70 / 50 / 30`), que es la de mejor
+separación de las que se probaron, pero el par de tonos claros queda por
+debajo del umbral en el que dos colores se distinguen con comodidad.
+
+Por eso en W-04 el color **nunca viaja solo**: hay leyenda, cada barra
+lleva su total escrito, los segmentos van separados por 2 px y existe
+una vista de tabla con el detalle completo. Queda pendiente decidir en
+Figma si se agrega una paleta categórica propia — afecta también a W-05.

@@ -1,0 +1,170 @@
+<app-top-bar />
+
+<main class="panel">
+  <div class="panel__encabezado">
+    <div>
+      <h1 class="panel__titulo">Panel de tiempo</h1>
+      <p class="panel__periodo">
+        Semana del 12 al 18 de agosto &nbsp;·&nbsp; {{ totalSemana() }} h registradas
+      </p>
+    </div>
+
+    <button type="button" class="boton boton--secundario">Semana ▾</button>
+  </div>
+
+  <section class="areas" aria-label="Tiempo por área de vida">
+    @for (area of areas; track area.id) {
+      <a class="area" [class]="'area--' + area.id" href="#">
+        <span class="area__nombre">{{ area.nombre }}</span>
+
+        <span class="area__cifra">
+          <strong class="area__horas">{{ area.horas }}<span class="unidad">h</span></strong>
+          <span class="area__porcentaje">{{ area.porcentaje }}%</span>
+        </span>
+
+        <span
+          class="area__proporcion"
+          role="img"
+          [attr.aria-label]="area.porcentaje + '% del tiempo de la semana'"
+        >
+          <span class="area__relleno" [style.width.%]="area.porcentaje"></span>
+        </span>
+
+        <span class="area__enlace">Ver el histórico</span>
+      </a>
+    }
+  </section>
+
+  <div class="panel__cuerpo">
+    <section class="grafica" aria-labelledby="titulo-grafica">
+      <div class="grafica__cabecera">
+        <h2 id="titulo-grafica" class="titulo-seccion">Horas por día</h2>
+
+        <div class="conmutador" role="group" aria-label="Forma de ver los datos">
+          <button
+            type="button"
+            [class.es-activo]="vista() === 'grafica'"
+            [attr.aria-pressed]="vista() === 'grafica'"
+            (click)="mostrar('grafica')"
+          >
+            Gráfica
+          </button>
+          <button
+            type="button"
+            [class.es-activo]="vista() === 'tabla'"
+            [attr.aria-pressed]="vista() === 'tabla'"
+            (click)="mostrar('tabla')"
+          >
+            Tabla
+          </button>
+        </div>
+      </div>
+
+      <ul class="leyenda">
+        @for (area of areas; track area.id) {
+          <li class="leyenda__item">
+            <span class="leyenda__muestra" [class]="'muestra--' + area.id"></span>
+            {{ area.nombre }}
+          </li>
+        }
+      </ul>
+
+      @if (vista() === 'grafica') {
+        <div class="plot">
+          <div class="plot__eje" aria-hidden="true">
+            @for (marca of marcasEje; track marca) {
+              <div class="plot__marca">
+                <span class="plot__valor">{{ marca }} h</span>
+                <span class="plot__guia"></span>
+              </div>
+            }
+          </div>
+
+          <div class="plot__columnas">
+            @for (columna of columnas(); track columna.etiqueta) {
+              <div class="columna">
+                <div class="columna__barra">
+                  <span class="columna__total" [style.bottom.%]="columna.alto">
+                    {{ columna.total }}<span class="unidad">h</span>
+                  </span>
+
+                  <span class="columna__pila">
+                    @for (segmento of columna.segmentos; track segmento.areaId) {
+                      <span
+                        class="segmento"
+                        [class]="'segmento--' + segmento.areaId"
+                        [style.height.%]="segmento.alto"
+                        [attr.title]="
+                          columna.nombre + ' · ' + segmento.nombre + ': ' + segmento.horas + ' h'
+                        "
+                      ></span>
+                    }
+                  </span>
+                </div>
+
+                <span class="columna__dia">{{ columna.etiqueta }}</span>
+              </div>
+            }
+          </div>
+        </div>
+
+        <p class="grafica__nota">
+          El par de tonos más claros se distingue poco: cada barra lleva su total escrito y
+          la vista de tabla trae el detalle completo.
+        </p>
+      } @else {
+        <table class="tabla">
+          <caption class="solo-lectores">Horas por día y área de vida</caption>
+          <thead>
+            <tr>
+              <th scope="col">Día</th>
+              @for (area of areas; track area.id) {
+                <th scope="col">{{ area.nombre }}</th>
+              }
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (columna of columnas(); track columna.etiqueta) {
+              <tr>
+                <th scope="row">{{ columna.nombre }}</th>
+                @for (area of areas; track area.id) {
+                  <td>{{ horasDe(columna, area.id) || '—' }}</td>
+                }
+                <td class="tabla__total">{{ columna.total }} h</td>
+              </tr>
+            }
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row">Total</th>
+              @for (area of areas; track area.id) {
+                <td>{{ area.horas }} h</td>
+              }
+              <td class="tabla__total">{{ totalSemana() }} h</td>
+            </tr>
+          </tfoot>
+        </table>
+      }
+    </section>
+
+    <section class="fallos" aria-labelledby="titulo-fallos">
+      <h2 id="titulo-fallos" class="titulo-seccion">Alarmas que fallaron</h2>
+      <p class="fallos__origen">Sale del registro automático de la app móvil</p>
+
+      <ul class="fallos__lista">
+        @for (alarma of alarmasFallidas; track alarma.titulo) {
+          <li class="fallo">
+            <span class="fallo__titulo">{{ alarma.titulo }}</span>
+            <span class="fallo__pie">
+              <span class="fallo__cuando">{{ alarma.cuando }}</span>
+              <span class="fallo__motivo">{{ alarma.motivo }}</span>
+            </span>
+          </li>
+        }
+      </ul>
+
+      <a class="fallos__ver-todas" href="#">Ver las 12 alarmas de la semana</a>
+    </section>
+  </div>
+</main>

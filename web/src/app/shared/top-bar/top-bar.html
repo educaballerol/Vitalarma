@@ -1,0 +1,19 @@
+<header class="barra">
+  <div class="barra__interior">
+    <div class="barra__izquierda">
+      <span class="barra__logo">VITALARMA</span>
+
+      <nav class="barra__nav" aria-label="Navegación principal">
+        <a routerLink="/panel" routerLinkActive="es-activo" class="barra__enlace">Panel</a>
+        <a routerLink="/alarmas" routerLinkActive="es-activo" class="barra__enlace">Alarmas</a>
+        <a routerLink="/rutinas" routerLinkActive="es-activo" class="barra__enlace">Rutinas</a>
+        <a routerLink="/configuracion" routerLinkActive="es-activo" class="barra__enlace">Configuración</a>
+      </nav>
+    </div>
+
+    <span class="barra__avatar" [attr.title]="usuario()">
+      {{ iniciales }}
+      <span class="solo-lectores">Sesión de {{ usuario() }}</span>
+    </span>
+  </div>
+</header>

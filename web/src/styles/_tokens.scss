@@ -1,0 +1,81 @@
+:root {
+  --gris-10: #f4f4f4;
+  --gris-20: #e0e0e0;
+  --gris-30: #c6c6c6;
+  --gris-40: #a8a8a8;
+  --gris-50: #8d8d8d;
+  --gris-60: #6f6f6f;
+  --gris-70: #525252;
+  --gris-80: #393939;
+  --gris-90: #262626;
+  --gris-100: #161616;
+
+  --naranja-10: #fff3e6;
+  --naranja-20: #ffe0b8;
+  --naranja-30: #ffc98a;
+  --naranja-40: #fdb05c;
+  --naranja-50: #f2954a;
+  --naranja-60: #d97b2e;
+  --naranja-70: #b3611d;
+  --naranja-80: #8a4a14;
+  --naranja-90: #5c300c;
+
+  --soporte-exito: #24a148;
+  --soporte-advertencia: #f1c21b;
+  --soporte-error: #da1e28;
+  --soporte-info: #0043ce;
+
+  --fondo-pagina: #ffffff;
+  --fondo-capa: var(--gris-10);
+  --fondo-capa-alta: var(--gris-20);
+  --fondo-accion: var(--naranja-50);
+  --fondo-accion-hover: var(--naranja-60);
+  --fondo-accion-suave: var(--naranja-10);
+
+  --texto-primario: var(--gris-100);
+  --texto-secundario: var(--gris-70);
+  --texto-terciario: var(--gris-50);
+  --texto-accion: var(--naranja-70);
+  --texto-sobre-accion: var(--gris-100);
+
+  --borde-sutil: var(--gris-20);
+  --borde-fuerte: var(--gris-30);
+  --borde-interactivo: var(--naranja-50);
+
+  --area-trabajo: var(--naranja-90);
+  --area-estudio: var(--naranja-70);
+  --area-personal: var(--naranja-50);
+  --area-deporte: var(--naranja-30);
+
+  --fuente-sans: 'IBM Plex Sans', -apple-system, 'Segoe UI', sans-serif;
+  --fuente-mono: 'IBM Plex Mono', 'Consolas', monospace;
+
+  --fs-etiqueta: 10px;
+  --fs-menor: 13px;
+  --fs-cuerpo: 16px;
+  --fs-subtitulo: 20px;
+  --fs-seccion: 26px;
+  --fs-titulo: 42px;
+
+  --lh-base: 1.4;
+  --ls-etiqueta: 1.4px;
+  --ls-titulo: -1px;
+
+  --esp-2xs: 4px;
+  --esp-xs: 8px;
+  --esp-sm: 12px;
+  --esp-md: 16px;
+  --esp-base: 24px;
+  --esp-lg: 32px;
+  --esp-xl: 48px;
+
+  --margen-lateral: 48px;
+  --ancho-maximo: 1440px;
+
+  --alto-barra-superior: 72px;
+  --alto-boton: 48px;
+  --alto-campo: 48px;
+
+  --radio-none: 0;
+  --radio-pastilla: 999px;
+}
