@@ -51,7 +51,8 @@ src/
     ├── shared/                # componentes usados por varias pantallas
     │   └── top-bar/           # BarraSuperior (va en todas las pantallas)
     └── features/
-        └── panel/             # W-04
+        ├── panel/             # W-04
+        └── area/              # W-05
 ```
 
 Al agregar una pantalla: un componente en `features/<pantalla>/`, su
@@ -63,7 +64,7 @@ commit por pantalla**.
 | Código | Pantalla                      | Requerimiento          | Estado |
 | ------ | ----------------------------- | ---------------------- | ------ |
 | W-04   | Panel de tiempo por área      | W2 · Estadísticas      | ✅     |
-| W-05   | Detalle de un área e histórico | W2 · Estadísticas      | ⬜     |
+| W-05   | Detalle de un área e histórico | W2 · Estadísticas      | ✅     |
 | W-06   | Exportar reporte (modal)      | W6 · Reportes PDF      | ⬜     |
 | W-07   | Tabla de todas las alarmas    | W3 · Gestión escritorio | ⬜     |
 | W-08   | Edición masiva                | W3 · Gestión escritorio | ⬜     |
@@ -102,5 +103,13 @@ debajo del umbral en el que dos colores se distinguen con comodidad.
 
 Por eso en W-04 el color **nunca viaja solo**: hay leyenda, cada barra
 lleva su total escrito, los segmentos van separados por 2 px y existe
-una vista de tabla con el detalle completo. Queda pendiente decidir en
-Figma si se agrega una paleta categórica propia — afecta también a W-05.
+una vista de tabla con el detalle completo.
+
+En W-05 el problema es distinto: ahí solo hay una serie por pantalla, así
+que no hace falta separar cuatro colores, pero un trazo de 2 px en
+`naranja-30` es ilegible sobre blanco (contraste 1,46:1). Por eso la
+gráfica de línea usa los tokens `--area-*-fuerte`, pasos más oscuros de
+la misma rampa que llegan a 3:1.
+
+Queda pendiente decidir en Figma si se agrega una paleta categórica
+propia para las áreas.
