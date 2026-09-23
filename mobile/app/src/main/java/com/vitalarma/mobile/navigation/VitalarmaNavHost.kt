@@ -27,6 +27,7 @@ import com.vitalarma.mobile.ui.screens.alarms.CreateAlarmTypeScreen
 import com.vitalarma.mobile.ui.screens.alarms.DeleteAlarmScreen
 import com.vitalarma.mobile.ui.screens.alarms.ScanObjectScreen
 import com.vitalarma.mobile.ui.screens.routines.RoutineListScreen
+import com.vitalarma.mobile.ui.screens.settings.DevicesScreen
 import com.vitalarma.mobile.ui.screens.settings.SettingsScreen
 
 /**
@@ -185,7 +186,12 @@ fun VitalarmaNavHost(
                 onScheduleClick = { }
             )
         }
-        composable(Routes.DEVICES) { PlaceholderScreen("Dispositivos") }
+        composable(Routes.DEVICES) {
+            DevicesScreen(
+                onBackClick = { navController.popBackStack() },
+                onLinkDeviceClick = { }
+            )
+        }
         composable(Routes.CONTACTS) { PlaceholderScreen("Contactos") }
         composable(Routes.ACCOUNT) { PlaceholderScreen("Cuenta") }
     }
