@@ -18,6 +18,7 @@ import androidx.navigation.navArgument
 import com.vitalarma.mobile.model.sampleAlarms
 import com.vitalarma.mobile.model.AlarmType
 import com.vitalarma.mobile.ui.screens.alarms.AlarmDetailScreen
+import com.vitalarma.mobile.ui.screens.alarms.AlarmRingingScreen
 import com.vitalarma.mobile.ui.screens.alarms.AlarmListScreen
 import com.vitalarma.mobile.ui.screens.alarms.CreateAlarmTimeScreen
 import com.vitalarma.mobile.ui.screens.alarms.CreateAlarmTypeScreen
@@ -105,7 +106,17 @@ fun VitalarmaNavHost(
         composable(Routes.ALARM_CREATED) { PlaceholderScreen("Alarma creada") }
 
         // Ejecución
-        composable(Routes.ALARM_RINGING) { PlaceholderScreen("Alarma sonando") }
+        composable(
+            route = Routes.ALARM_RINGING,
+            arguments = listOf(navArgument("alarmId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val alarmId = backStackEntry.arguments?.getString("alarmId")
+            val alarm = sampleAlarms.find { it.id == alarmId } ?: sampleAlarms.first()
+            AlarmRingingScreen(
+                alarm = alarm,
+                onStopClick = { navController.navigate(Routes.alarmScanObject(alarm.id)) }
+            )
+        }
         composable(Routes.ALARM_SCAN_OBJECT) { PlaceholderScreen("Escanea el objeto") }
         composable(Routes.ALARM_COMPLETED) { PlaceholderScreen("Alarma cumplida") }
         composable(Routes.BACKUP_TRIGGERED) { PlaceholderScreen("Respaldo activado") }
