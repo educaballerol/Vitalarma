@@ -18,6 +18,7 @@ import androidx.navigation.navArgument
 import com.vitalarma.mobile.model.sampleAlarms
 import com.vitalarma.mobile.model.AlarmType
 import com.vitalarma.mobile.ui.screens.alarms.AlarmCompletedScreen
+import com.vitalarma.mobile.ui.screens.alarms.AlarmCreatedScreen
 import com.vitalarma.mobile.ui.screens.alarms.AlarmDetailScreen
 import com.vitalarma.mobile.ui.screens.alarms.AlarmRingingScreen
 import com.vitalarma.mobile.ui.screens.alarms.BackupTriggeredScreen
@@ -123,11 +124,30 @@ fun VitalarmaNavHost(
                 alarmType = alarmType,
                 onBackClick = { navController.popBackStack() },
                 onCreateAlarmClick = {
-                    navController.popBackStack(Routes.ALARM_LIST, inclusive = false)
+                    navController.navigate(Routes.alarmCreated(sampleAlarms.first().id)) {
+                        popUpTo(Routes.ALARM_LIST)
+                    }
                 }
             )
         }
-        composable(Routes.ALARM_CREATED) { PlaceholderScreen("Alarma creada") }
+        composable(
+            route = Routes.ALARM_CREATED,
+            arguments = listOf(navArgument("alarmId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val alarmId = backStackEntry.arguments?.getString("alarmId")
+            val alarm = sampleAlarms.find { it.id == alarmId } ?: sampleAlarms.first()
+            AlarmCreatedScreen(
+                alarm = alarm,
+                onSeeAlarmsClick = {
+                    navController.popBackStack(Routes.ALARM_LIST, inclusive = false)
+                },
+                onCreateAnotherClick = {
+                    navController.navigate(Routes.ALARM_TIME_PICKER) {
+                        popUpTo(Routes.ALARM_LIST)
+                    }
+                }
+            )
+        }
 
         // Ejecución
         composable(

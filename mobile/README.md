@@ -88,30 +88,45 @@ app/src/main/java/com/vitalarma/mobile/
 
 ## Pantallas implementadas
 
-| Código | Pantalla                      | Requerimiento             | Autor    |
-| ------ | ----------------------------- | ------------------------- | -------- |
-| M-04   | Mis Alarmas                   | M2 · M4                   | Eduardo  |
-| M-05   | Editar alarma                 | M2 · Crear y editar       | Eduardo  |
-| M-06   | Eliminar alarma               | Retroalimentación         | Eduardo  |
-| M-06b  | Escoge un tipo (bottom sheet) | M2 · M4                   | Eduardo  |
-| M-07   | Definir hora                  | M2 · Crear alarma         | Humberto |
-| M-08   | Escoger tipo                  | M2 · M4                   | Humberto |
-| M-09   | Detalles                      | M2 · Crear alarma         | Eduardo  |
-| M-11   | Alarma sonando                | M3 · M4                   | Humberto |
-| M-12   | Escanear objeto               | M3 · Acción para apagar   | Humberto |
-| M-13   | Alarma cumplida               | M11 · Registro automático | Humberto |
-| M-14   | Respaldo activado             | M7 · M8                   | Humberto |
-| M-15   | Mis Rutinas                   | M10 · Activar en bloque   | Humberto |
-| M-17   | Ajustes · modo cauto          | M5 · Modo cauto           | Humberto |
-| M-18   | Dispositivos de respaldo      | M7 · Otro dispositivo     | Humberto |
-| —      | Eliminar rutina               | Retroalimentación         | Humberto |
+Numeración verificada directo del archivo de Figma ("Mockup · Móvil",
+que agrupa M-01 a M-22 con autor de diseño asignado a cada frame).
+Quedan fuera de esta tabla a propósito: las pantallas de login (M-01,
+M-02, M-03, M-03b) y M-21/M-22 (Contactos de confianza, Cuenta y
+perfil) — estas últimas no por ser login, sino porque no forman parte
+del flujo principal del proyecto (creación y gestión de alarmas y
+rutinas).
 
-Las pantallas de login quedan fuera a propósito: el entregable es solo
-el flujo principal.
+| Código | Pantalla                    | Autor     | Estado       |
+| ------ | --------------------------- | --------- | ------------ |
+| M-04   | Mis alarmas                 | Eduardo   | Implementada |
+| M-05   | Editar alarma               | Eduardo   | Implementada |
+| M-06   | Eliminar alarma             | Eduardo   | Implementada |
+| M-06b  | Escoger tipo (bottom sheet) | Eduardo   | Implementada |
+| M-07   | Definir hora                | Humberto  | Implementada |
+| M-08   | Qué tipo de alarma          | Humberto  | Implementada |
+| M-09   | Detalles                    | Eduardo¹  | Implementada |
+| M-10   | Alarma creada               | Eduardo¹  | Implementada |
+| M-11   | Alarma sonando              | Humberto  | Implementada |
+| M-12   | Escanear el objeto          | Humberto  | Implementada |
+| M-13   | Alarma cumplida             | Humberto¹ | Implementada |
+| M-14   | Respaldo activado           | Humberto¹ | Implementada |
+| M-15   | Rutinas                     | Humberto  | Implementada |
+| M-16   | Detalle de rutina           | Eduardo   | Pendiente    |
+| M-17   | Nueva rutina                | Eduardo   | Pendiente    |
+| M-18   | Eliminar rutina             | Humberto  | Implementada |
+| M-19   | Ajustes                     | Humberto  | Implementada |
+| M-20   | Dispositivos de respaldo    | Humberto  | Implementada |
 
-> Nota: el enunciado escrito dice "máximo 3 pantallas por estudiante",
-> pero el profesor aclaró en clase que es un mínimo — se puede codificar
-> más siempre que quede documentado aquí, como en esta tabla.
+¹ El diseño en Figma asigna estas pantallas al otro integrante del
+binomio, pero el código lo escribió quien aparece aquí — la tabla
+refleja autoría de código, no de diseño.
+
+El flujo principal del proyecto es la **creación y gestión de alarmas y
+rutinas**: desde armar una alarma nueva (hora, tipo, detalles),
+incluimos su ejecución (sonando, escaneo del objeto, respaldo si no se
+reacciona), hasta agruparlas en rutinas y ajustar cómo se comportan
+(modo cauto, dispositivos de respaldo). Las pantallas de la tabla cubren
+ese flujo de punta a punta entre los dos integrantes del equipo.
 
 ## Cómo probar el flujo principal
 
