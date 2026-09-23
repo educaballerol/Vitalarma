@@ -22,6 +22,7 @@ import com.vitalarma.mobile.ui.screens.alarms.AlarmDetailScreen
 import com.vitalarma.mobile.ui.screens.alarms.AlarmRingingScreen
 import com.vitalarma.mobile.ui.screens.alarms.BackupTriggeredScreen
 import com.vitalarma.mobile.ui.screens.alarms.AlarmListScreen
+import com.vitalarma.mobile.ui.screens.alarms.CreateAlarmDetailsScreen
 import com.vitalarma.mobile.ui.screens.alarms.CreateAlarmTimeScreen
 import com.vitalarma.mobile.ui.screens.alarms.CreateAlarmTypeScreen
 import com.vitalarma.mobile.ui.screens.alarms.DeleteAlarmScreen
@@ -35,8 +36,8 @@ import com.vitalarma.mobile.ui.screens.settings.SettingsScreen
 /**
  * Punto único de navegación de la app.
  *
- * M-04, M-05 y M-06 ya están implementadas con datos reales (ver
- * ui/screens/alarms/). El resto sigue en PlaceholderScreen.
+ * M-04, M-05, M-06, M-08 y M-09 ya están implementadas con datos reales.
+ * El resto sigue en PlaceholderScreen.
  */
 @Composable
 fun VitalarmaNavHost(
@@ -104,13 +105,28 @@ fun VitalarmaNavHost(
         composable(Routes.ALARM_TYPE_PICKER) {
             CreateAlarmTypeScreen(
                 onBackClick = { navController.popBackStack() },
-                onNextClick = { _: AlarmType -> navController.navigate(Routes.ALARM_DETAILS_STEP) },
+                // Antes descartaba el tipo elegido (onNextClick = { _: AlarmType -> ... });
+                // ahora se lo pasamos a M-09 como argumento de ruta.
+                onNextClick = { tipo: AlarmType -> navController.navigate(Routes.alarmDetailsStep(tipo.name)) },
                 onCancelClick = {
                     navController.popBackStack(Routes.ALARM_LIST, inclusive = false)
                 }
             )
         }
-        composable(Routes.ALARM_DETAILS_STEP) { PlaceholderScreen("Detalles") }
+        composable(
+            route = Routes.ALARM_DETAILS_STEP,
+            arguments = listOf(navArgument("type") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val typeName = backStackEntry.arguments?.getString("type")
+            val alarmType = AlarmType.entries.find { it.name == typeName } ?: AlarmType.CRITICA
+            CreateAlarmDetailsScreen(
+                alarmType = alarmType,
+                onBackClick = { navController.popBackStack() },
+                onCreateAlarmClick = {
+                    navController.popBackStack(Routes.ALARM_LIST, inclusive = false)
+                }
+            )
+        }
         composable(Routes.ALARM_CREATED) { PlaceholderScreen("Alarma creada") }
 
         // Ejecución

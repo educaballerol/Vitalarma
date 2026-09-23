@@ -82,34 +82,43 @@ app/src/main/java/com/vitalarma/mobile/
 ├── ui/
 │   ├── theme/                 # paleta, tipografía, espaciados y formas (design system)
 │   ├── components/            # componentes reutilizables (botón, campo, chips, etc.)
-│   └── screens/alarms/        # pantallas del flujo de alarmas
+│   └── screens/                # pantallas del flujo de alarmas, rutinas y ajustes
 └── res/font/                  # IBM Plex Sans / IBM Plex Mono empaquetadas
 ```
 
 ## Pantallas implementadas
 
-| Código | Pantalla                      | Requerimiento            | Autor    |
-| ------ | ----------------------------- | ------------------------ | -------- |
-| M-04   | Mis Alarmas                   | M2 · M4                  | Eduardo  |
-| M-05   | Editar alarma                 | M2 · Crear y editar      | Eduardo  |
-| M-06   | Eliminar alarma               | Retroalimentación        | Eduardo  |
-| M-07   | Definir hora                  | M2 · Crear alarma        | Humberto |
-| M-08   | Escoger tipo                  | M2 · M4                  | Humberto |
-| M-11   | Alarma sonando                | M3 · M4                  | Humberto |
-| M-12   | Escanear objeto               | M3 · Acción para apagar  | Humberto |
-| M-13   | Alarma cumplida               | M11 · Registro automático| Humberto |
-| M-14   | Respaldo activado             | M7 · M8                  | Humberto |
-| M-15   | Mis Rutinas                   | M10 · Activar en bloque  | Humberto |
-| M-17   | Ajustes · modo cauto          | M5 · Modo cauto          | Humberto |
-| M-18   | Dispositivos de respaldo      | M7 · Otro dispositivo    | Humberto |
-| —      | Eliminar rutina               | Retroalimentación        | Humberto |
+| Código | Pantalla                      | Requerimiento             | Autor    |
+| ------ | ----------------------------- | ------------------------- | -------- |
+| M-04   | Mis Alarmas                   | M2 · M4                   | Eduardo  |
+| M-05   | Editar alarma                 | M2 · Crear y editar       | Eduardo  |
+| M-06   | Eliminar alarma               | Retroalimentación         | Eduardo  |
+| M-06b  | Escoge un tipo (bottom sheet) | M2 · M4                   | Eduardo  |
+| M-07   | Definir hora                  | M2 · Crear alarma         | Humberto |
+| M-08   | Escoger tipo                  | M2 · M4                   | Humberto |
+| M-09   | Detalles                      | M2 · Crear alarma         | Eduardo  |
+| M-11   | Alarma sonando                | M3 · M4                   | Humberto |
+| M-12   | Escanear objeto               | M3 · Acción para apagar   | Humberto |
+| M-13   | Alarma cumplida               | M11 · Registro automático | Humberto |
+| M-14   | Respaldo activado             | M7 · M8                   | Humberto |
+| M-15   | Mis Rutinas                   | M10 · Activar en bloque   | Humberto |
+| M-17   | Ajustes · modo cauto          | M5 · Modo cauto           | Humberto |
+| M-18   | Dispositivos de respaldo      | M7 · Otro dispositivo     | Humberto |
+| —      | Eliminar rutina               | Retroalimentación         | Humberto |
 
 Las pantallas de login quedan fuera a propósito: el entregable es solo
 el flujo principal.
 
+> Nota: el enunciado escrito dice "máximo 3 pantallas por estudiante",
+> pero el profesor aclaró en clase que es un mínimo — se puede codificar
+> más siempre que quede documentado aquí, como en esta tabla.
+
 ## Cómo probar el flujo principal
 
-1. **Crear alarma:** `+ Crear alarma` → Definir hora → Escoger tipo.
+1. **Crear alarma:** `+ Crear alarma` → Definir hora → Escoger tipo →
+   Detalles (el campo "Título", la nota de voz y el vínculo con
+   calendario son opcionales; "Cómo se apaga" solo aparece si elegiste
+   tipo Crítica) → Crear alarma.
 2. **Alarma crítica cumplida:** `Probar alarma crítica` → Apagar
    escaneando → tocar el visor → Alarma cumplida.
 3. **Alarma crítica ignorada:** `Probar alarma crítica` y no tocar

@@ -21,7 +21,9 @@ object Routes {
     const val ALARM_DELETE_CONFIRM = "alarm_delete_confirm/{alarmId}"
     const val ALARM_TYPE_PICKER = "alarm_type_picker"
     const val ALARM_TIME_PICKER = "alarm_time_picker"
-    const val ALARM_DETAILS_STEP = "alarm_details_step"
+    // Recibe el tipo elegido en M-08 (nombre del enum AlarmType) para saber
+    // si debe mostrar la sección "Cómo se apaga" (solo alarmas Críticas).
+    const val ALARM_DETAILS_STEP = "alarm_details_step/{type}"
     const val ALARM_CREATED = "alarm_created/{alarmId}"
 
     // Ejecución de alarma
@@ -44,6 +46,7 @@ object Routes {
 
     fun alarmDetail(alarmId: String) = "alarm_detail/$alarmId"
     fun alarmDeleteConfirm(alarmId: String) = "alarm_delete_confirm/$alarmId"
+    fun alarmDetailsStep(type: String) = "alarm_details_step/$type"
     fun alarmCreated(alarmId: String) = "alarm_created/$alarmId"
     fun alarmRinging(alarmId: String) = "alarm_ringing/$alarmId"
     fun alarmScanObject(alarmId: String) = "alarm_scan_object/$alarmId"
