@@ -111,7 +111,7 @@ rutinas).
 | M-13   | Alarma cumplida             | Humberto¹ | Implementada |
 | M-14   | Respaldo activado           | Humberto¹ | Implementada |
 | M-15   | Rutinas                     | Humberto  | Implementada |
-| M-16   | Detalle de rutina           | Eduardo   | Pendiente    |
+| M-16   | Detalle de rutina           | Eduardo   | Implementada |
 | M-17   | Nueva rutina                | Eduardo   | Pendiente    |
 | M-18   | Eliminar rutina             | Humberto  | Implementada |
 | M-19   | Ajustes                     | Humberto  | Implementada |

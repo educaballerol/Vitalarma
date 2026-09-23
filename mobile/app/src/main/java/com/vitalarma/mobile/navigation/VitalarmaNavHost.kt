@@ -30,6 +30,7 @@ import com.vitalarma.mobile.ui.screens.alarms.DeleteAlarmScreen
 import com.vitalarma.mobile.ui.screens.alarms.ScanObjectScreen
 import com.vitalarma.mobile.model.sampleRoutines
 import com.vitalarma.mobile.ui.screens.routines.DeleteRoutineScreen
+import com.vitalarma.mobile.ui.screens.routines.RoutineDetailScreen
 import com.vitalarma.mobile.ui.screens.routines.RoutineListScreen
 import com.vitalarma.mobile.ui.screens.settings.DevicesScreen
 import com.vitalarma.mobile.ui.screens.settings.SettingsScreen
@@ -212,7 +213,22 @@ fun VitalarmaNavHost(
                 onCreateRoutineClick = { navController.navigate(Routes.ROUTINE_NEW) }
             )
         }
-        composable(Routes.ROUTINE_DETAIL) { PlaceholderScreen("Detalle de rutina") }
+        composable(
+            route = Routes.ROUTINE_DETAIL,
+            arguments = listOf(navArgument("routineId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val routineId = backStackEntry.arguments?.getString("routineId")
+            val routine = sampleRoutines.find { it.id == routineId } ?: sampleRoutines.first()
+            RoutineDetailScreen(
+                routine = routine,
+                currentRoute = Routes.ROUTINE_LIST,
+                onNavigate = { route -> navController.navigate(route) },
+                onBackClick = { navController.popBackStack() },
+                onSaveClick = { navController.popBackStack() },
+                onAddAlarmClick = { navController.navigate(Routes.ALARM_TIME_PICKER) },
+                onDeleteClick = { navController.navigate(Routes.routineDeleteConfirm(routine.id)) }
+            )
+        }
         composable(Routes.ROUTINE_NEW) { PlaceholderScreen("Nueva rutina") }
         composable(
             route = Routes.ROUTINE_DELETE_CONFIRM,
