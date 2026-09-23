@@ -29,6 +29,7 @@ import com.vitalarma.mobile.ui.screens.alarms.CreateAlarmTypeScreen
 import com.vitalarma.mobile.ui.screens.alarms.DeleteAlarmScreen
 import com.vitalarma.mobile.ui.screens.alarms.ScanObjectScreen
 import com.vitalarma.mobile.model.sampleRoutines
+import com.vitalarma.mobile.ui.screens.routines.CreateRoutineScreen
 import com.vitalarma.mobile.ui.screens.routines.DeleteRoutineScreen
 import com.vitalarma.mobile.ui.screens.routines.RoutineDetailScreen
 import com.vitalarma.mobile.ui.screens.routines.RoutineListScreen
@@ -229,7 +230,13 @@ fun VitalarmaNavHost(
                 onDeleteClick = { navController.navigate(Routes.routineDeleteConfirm(routine.id)) }
             )
         }
-        composable(Routes.ROUTINE_NEW) { PlaceholderScreen("Nueva rutina") }
+        composable(Routes.ROUTINE_NEW) {
+            CreateRoutineScreen(
+                onCreateRoutineClick = { navController.popBackStack(Routes.ROUTINE_LIST, inclusive = false) },
+                onCancelClick = { navController.popBackStack(Routes.ROUTINE_LIST, inclusive = false) },
+                onAddAlarmClick = { navController.navigate(Routes.ALARM_TIME_PICKER) }
+            )
+        }
         composable(
             route = Routes.ROUTINE_DELETE_CONFIRM,
             arguments = listOf(navArgument("routineId") { type = NavType.StringType })

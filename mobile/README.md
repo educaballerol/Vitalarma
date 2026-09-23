@@ -76,14 +76,14 @@ conectado.
 
 ```
 app/src/main/java/com/vitalarma/mobile/
-├── MainActivity.kt          # punto de entrada, arranca VitalarmaNavHost
+├── MainActivity.kt           # punto de entrada, arranca VitalarmaNavHost
 ├── navigation/               # rutas y grafo de navegación (Navigation Compose)
-├── model/                    # data classes y listas de ejemplo (sin backend)
+├── models/                   # data classes y listas de ejemplo (sin backend)
 ├── ui/
-│   ├── theme/                 # paleta, tipografía, espaciados y formas (design system)
-│   ├── components/            # componentes reutilizables (botón, campo, chips, etc.)
-│   └── screens/                # pantallas del flujo de alarmas, rutinas y ajustes
-└── res/font/                  # IBM Plex Sans / IBM Plex Mono empaquetadas
+│   ├── theme/                # paleta, tipografía, espaciados y formas (design system)
+│   ├── components/           # componentes reutilizables (botón, campo, chips, etc.)
+│   └── screens/              # pantallas del flujo de alarmas, rutinas y ajustes
+└── res/font/                 # IBM Plex Sans / IBM Plex Mono empaquetadas
 ```
 
 ## Pantallas implementadas
@@ -112,7 +112,7 @@ rutinas).
 | M-14   | Respaldo activado           | Humberto¹ | Implementada |
 | M-15   | Rutinas                     | Humberto  | Implementada |
 | M-16   | Detalle de rutina           | Eduardo   | Implementada |
-| M-17   | Nueva rutina                | Eduardo   | Pendiente    |
+| M-17   | Nueva rutina                | Eduardo   | Implementada |
 | M-18   | Eliminar rutina             | Humberto  | Implementada |
 | M-19   | Ajustes                     | Humberto  | Implementada |
 | M-20   | Dispositivos de respaldo    | Humberto  | Implementada |
@@ -139,8 +139,17 @@ ese flujo de punta a punta entre los dos integrantes del equipo.
 3. **Alarma crítica ignorada:** `Probar alarma crítica` y no tocar
    nada. A los 15 segundos aparece sola la pantalla de respaldo. El
    tiempo está en `SEGUNDOS_HASTA_RESPALDO`, en `AlarmRingingScreen.kt`.
-4. **Rutinas y ajustes:** pestañas de la barra inferior. Para eliminar
-   una rutina, mantenla pulsada en la lista.
+4. **Rutinas:** pestaña "Rutinas" de la barra inferior. `+ Nueva
+rutina` abre M-17 (nombre, días activos, agregar alarmas). Tocar
+   una rutina existente abre M-16 (Detalle de rutina): puedes cambiar
+   los días activos y prender/apagar cada alarma de la rutina.
+   "Eliminar rutina" (M-18) se abre desde dos caminos: manteniendo
+   pulsada una rutina en la lista (M-15), o tocando "Eliminar rutina"
+   dentro de su detalle (M-16).
+5. **Ajustes:** pestaña "Ajustes" de la barra inferior (M-19: modo
+   cauto, horario silencioso). Desde ahí, "Dispositivos de respaldo"
+   abre M-20. Contactos de confianza y Cuenta quedan fuera del alcance
+   de esta entrega (ver nota en "Pantallas implementadas").
 
 ## Design system
 

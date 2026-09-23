@@ -23,8 +23,8 @@ import com.vitalarma.mobile.ui.theme.VitalarmaType
 /**
  * "Encabezado" de Figma (nodo 2116:462): "Grande para las raíces de cada
  * pestaña (H1 + próxima acción), Atrás para pantallas de detalle, Modal
- * para los pasos del flujo de creación." Aquí implementamos Grande y
- * Atrás, que son las que usan M-04/05/06.
+ * para los pasos del flujo de creación." Grande y Atrás las usan
+ * M-04/05/06/16; Modal la usa M-17.
  */
 
 /** Variante "Grande": H1 + subtítulo opcional. Usada en M-04 (Mis Alarmas). */
@@ -85,6 +85,28 @@ fun HeaderBack(
             style = VitalarmaType.h3,
             color = VitalarmaColors.textoPrimario,
             modifier = Modifier.padding(start = Dimens.SpacingBase)
+        )
+    }
+}
+
+/** Variante "Modal": solo título, sin flecha atrás ni botón de cerrar. Usada en los pasos del flujo de creación (M-17). */
+@Composable
+fun HeaderModal(
+    title: String,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .background(VitalarmaColors.fondoPagina)
+            .padding(horizontal = Dimens.ScreenHorizontalMargin),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = title,
+            style = VitalarmaType.h3,
+            color = VitalarmaColors.textoPrimario
         )
     }
 }

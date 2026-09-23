@@ -29,6 +29,7 @@ import com.vitalarma.mobile.ui.components.DayChip
 import com.vitalarma.mobile.ui.components.HeaderBack
 import com.vitalarma.mobile.ui.components.VitalarmaBottomNavBar
 import com.vitalarma.mobile.ui.components.VitalarmaButton
+import com.vitalarma.mobile.ui.components.VitalarmaTextField
 import com.vitalarma.mobile.ui.theme.Dimens
 import com.vitalarma.mobile.ui.theme.VitalarmaColors
 import com.vitalarma.mobile.ui.theme.VitalarmaType
@@ -64,12 +65,13 @@ fun RoutineDetailScreen(
     onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var nombre by remember { mutableStateOf(routine.name) }
     var selectedDays by remember { mutableStateOf(daysFromLabel(routine.daysLabel)) }
     val routineAlarms: List<Alarm> = remember(routine) { sampleAlarms.take(routine.alarmCount.coerceAtMost(sampleAlarms.size)) }
     var alarmStates by remember { mutableStateOf(routineAlarms.associate { it.id to it.enabled }) }
 
     Column(modifier = modifier.fillMaxSize()) {
-        HeaderBack(title = routine.name, onBackClick = onBackClick)
+        HeaderBack(title = "Editar rutina", onBackClick = onBackClick)
 
         Column(
             modifier = Modifier
@@ -79,6 +81,13 @@ fun RoutineDetailScreen(
                 .padding(horizontal = Dimens.ScreenHorizontalMargin, vertical = Dimens.SpacingBase),
             verticalArrangement = Arrangement.spacedBy(Dimens.SpacingBase)
         ) {
+            VitalarmaTextField(
+                label = "Nombre de la rutina",
+                value = nombre,
+                onValueChange = { nombre = it },
+                placeholder = "Ej. Día de oficina"
+            )
+
             Column(verticalArrangement = Arrangement.spacedBy(Dimens.SpacingSm)) {
                 Text(text = "Activa los días", style = VitalarmaType.label, color = VitalarmaColors.textoSecundario)
                 Row(
