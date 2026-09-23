@@ -20,6 +20,7 @@ import com.vitalarma.mobile.model.AlarmType
 import com.vitalarma.mobile.ui.screens.alarms.AlarmCompletedScreen
 import com.vitalarma.mobile.ui.screens.alarms.AlarmDetailScreen
 import com.vitalarma.mobile.ui.screens.alarms.AlarmRingingScreen
+import com.vitalarma.mobile.ui.screens.alarms.BackupTriggeredScreen
 import com.vitalarma.mobile.ui.screens.alarms.AlarmListScreen
 import com.vitalarma.mobile.ui.screens.alarms.CreateAlarmTimeScreen
 import com.vitalarma.mobile.ui.screens.alarms.CreateAlarmTypeScreen
@@ -116,7 +117,8 @@ fun VitalarmaNavHost(
             val alarm = sampleAlarms.find { it.id == alarmId } ?: sampleAlarms.first()
             AlarmRingingScreen(
                 alarm = alarm,
-                onStopClick = { navController.navigate(Routes.alarmScanObject(alarm.id)) }
+                onStopClick = { navController.navigate(Routes.alarmScanObject(alarm.id)) },
+                onBackupTriggered = { navController.navigate(Routes.backupTriggered(alarm.id)) }
             )
         }
         composable(
@@ -142,7 +144,20 @@ fun VitalarmaNavHost(
                 }
             )
         }
-        composable(Routes.BACKUP_TRIGGERED) { PlaceholderScreen("Respaldo activado") }
+        composable(
+            route = Routes.BACKUP_TRIGGERED,
+            arguments = listOf(navArgument("alarmId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val alarmId = backStackEntry.arguments?.getString("alarmId")
+            val alarm = sampleAlarms.find { it.id == alarmId } ?: sampleAlarms.first()
+            BackupTriggeredScreen(
+                alarm = alarm,
+                onAwakeClick = { navController.navigate(Routes.alarmScanObject(alarm.id)) },
+                onCancelClick = {
+                    navController.popBackStack(Routes.ALARM_LIST, inclusive = false)
+                }
+            )
+        }
 
         // Rutinas
         composable(Routes.ROUTINE_LIST) { PlaceholderScreen("Rutinas") }

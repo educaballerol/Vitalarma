@@ -17,6 +17,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.disabled
@@ -31,13 +34,24 @@ import com.vitalarma.mobile.ui.theme.VitalarmaColors
 import com.vitalarma.mobile.ui.theme.VitalarmaShapes
 import com.vitalarma.mobile.ui.theme.VitalarmaType
 
+private const val SEGUNDOS_HASTA_RESPALDO = 15
+
 @Composable
 fun AlarmRingingScreen(
     alarm: Alarm,
     onStopClick: () -> Unit,
+    onBackupTriggered: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val esCritica = alarm.type == AlarmType.CRITICA
+    val dispararRespaldo by rememberUpdatedState(onBackupTriggered)
+
+    if (esCritica) {
+        LaunchedEffect(alarm.id) {
+            kotlinx.coroutines.delay(SEGUNDOS_HASTA_RESPALDO * 1000L)
+            dispararRespaldo()
+        }
+    }
     val colorTipo = when (alarm.type) {
         AlarmType.CRITICA -> VitalarmaColors.tipoCritica
         AlarmType.CAUTA -> VitalarmaColors.tipoCauta
