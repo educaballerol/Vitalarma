@@ -27,6 +27,7 @@ import com.vitalarma.mobile.ui.screens.alarms.CreateAlarmTypeScreen
 import com.vitalarma.mobile.ui.screens.alarms.DeleteAlarmScreen
 import com.vitalarma.mobile.ui.screens.alarms.ScanObjectScreen
 import com.vitalarma.mobile.ui.screens.routines.RoutineListScreen
+import com.vitalarma.mobile.ui.screens.settings.SettingsScreen
 
 /**
  * Punto único de navegación de la app.
@@ -174,7 +175,16 @@ fun VitalarmaNavHost(
         composable(Routes.ROUTINE_DELETE_CONFIRM) { PlaceholderScreen("Eliminar rutina") }
 
         // Ajustes
-        composable(Routes.SETTINGS) { PlaceholderScreen("Ajustes") }
+        composable(Routes.SETTINGS) {
+            SettingsScreen(
+                currentRoute = Routes.SETTINGS,
+                onNavigate = { route -> navController.navigate(route) },
+                onDevicesClick = { navController.navigate(Routes.DEVICES) },
+                onContactsClick = { navController.navigate(Routes.CONTACTS) },
+                onAccountClick = { navController.navigate(Routes.ACCOUNT) },
+                onScheduleClick = { }
+            )
+        }
         composable(Routes.DEVICES) { PlaceholderScreen("Dispositivos") }
         composable(Routes.CONTACTS) { PlaceholderScreen("Contactos") }
         composable(Routes.ACCOUNT) { PlaceholderScreen("Cuenta") }
