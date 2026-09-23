@@ -26,6 +26,8 @@ import com.vitalarma.mobile.ui.screens.alarms.CreateAlarmTimeScreen
 import com.vitalarma.mobile.ui.screens.alarms.CreateAlarmTypeScreen
 import com.vitalarma.mobile.ui.screens.alarms.DeleteAlarmScreen
 import com.vitalarma.mobile.ui.screens.alarms.ScanObjectScreen
+import com.vitalarma.mobile.model.sampleRoutines
+import com.vitalarma.mobile.ui.screens.routines.DeleteRoutineScreen
 import com.vitalarma.mobile.ui.screens.routines.RoutineListScreen
 import com.vitalarma.mobile.ui.screens.settings.DevicesScreen
 import com.vitalarma.mobile.ui.screens.settings.SettingsScreen
@@ -168,12 +170,29 @@ fun VitalarmaNavHost(
                 currentRoute = Routes.ROUTINE_LIST,
                 onNavigate = { route -> navController.navigate(route) },
                 onRoutineClick = { routine -> navController.navigate(Routes.routineDetail(routine.id)) },
+                onRoutineLongClick = { routine ->
+                    navController.navigate(Routes.routineDeleteConfirm(routine.id))
+                },
                 onCreateRoutineClick = { navController.navigate(Routes.ROUTINE_NEW) }
             )
         }
         composable(Routes.ROUTINE_DETAIL) { PlaceholderScreen("Detalle de rutina") }
         composable(Routes.ROUTINE_NEW) { PlaceholderScreen("Nueva rutina") }
-        composable(Routes.ROUTINE_DELETE_CONFIRM) { PlaceholderScreen("Eliminar rutina") }
+        composable(
+            route = Routes.ROUTINE_DELETE_CONFIRM,
+            arguments = listOf(navArgument("routineId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val routineId = backStackEntry.arguments?.getString("routineId")
+            val routine = sampleRoutines.find { it.id == routineId } ?: sampleRoutines.first()
+            DeleteRoutineScreen(
+                routine = routine,
+                onBackClick = { navController.popBackStack() },
+                onCancelClick = { navController.popBackStack() },
+                onConfirmDeleteClick = {
+                    navController.popBackStack(Routes.ROUTINE_LIST, inclusive = false)
+                }
+            )
+        }
 
         // Ajustes
         composable(Routes.SETTINGS) {

@@ -88,14 +88,35 @@ app/src/main/java/com/vitalarma/mobile/
 
 ## Pantallas implementadas
 
-| Mockup | Pantalla                      | Autor   | Estado                         |
-| ------ | ----------------------------- | ------- | ------------------------------ |
-| M-04   | Mis alarmas                   | Eduardo | ✅ Completa                    |
-| M-05   | Editar alarma                 | Eduardo | ✅ Completa                    |
-| M-06   | Eliminar alarma               | Eduardo | ✅ Completa                    |
-| M-06b  | Escoge un tipo (bottom sheet) | Eduardo | ✅ Completa, integrada en M-05 |
+| Código | Pantalla                      | Requerimiento            | Autor    |
+| ------ | ----------------------------- | ------------------------ | -------- |
+| M-04   | Mis Alarmas                   | M2 · M4                  | Eduardo  |
+| M-05   | Editar alarma                 | M2 · Crear y editar      | Eduardo  |
+| M-06   | Eliminar alarma               | Retroalimentación        | Eduardo  |
+| M-07   | Definir hora                  | M2 · Crear alarma        | Humberto |
+| M-08   | Escoger tipo                  | M2 · M4                  | Humberto |
+| M-11   | Alarma sonando                | M3 · M4                  | Humberto |
+| M-12   | Escanear objeto               | M3 · Acción para apagar  | Humberto |
+| M-13   | Alarma cumplida               | M11 · Registro automático| Humberto |
+| M-14   | Respaldo activado             | M7 · M8                  | Humberto |
+| M-15   | Mis Rutinas                   | M10 · Activar en bloque  | Humberto |
+| M-17   | Ajustes · modo cauto          | M5 · Modo cauto          | Humberto |
+| M-18   | Dispositivos de respaldo      | M7 · Otro dispositivo    | Humberto |
+| —      | Eliminar rutina               | Retroalimentación        | Humberto |
 
-<!-- TODO: agregar aquí las filas de las pantallas faltante -->
+Las pantallas de login quedan fuera a propósito: el entregable es solo
+el flujo principal.
+
+## Cómo probar el flujo principal
+
+1. **Crear alarma:** `+ Crear alarma` → Definir hora → Escoger tipo.
+2. **Alarma crítica cumplida:** `Probar alarma crítica` → Apagar
+   escaneando → tocar el visor → Alarma cumplida.
+3. **Alarma crítica ignorada:** `Probar alarma crítica` y no tocar
+   nada. A los 15 segundos aparece sola la pantalla de respaldo. El
+   tiempo está en `SEGUNDOS_HASTA_RESPALDO`, en `AlarmRingingScreen.kt`.
+4. **Rutinas y ajustes:** pestañas de la barra inferior. Para eliminar
+   una rutina, mantenla pulsada en la lista.
 
 ## Design system
 

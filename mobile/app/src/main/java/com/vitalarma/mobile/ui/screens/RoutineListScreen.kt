@@ -2,7 +2,7 @@ package com.vitalarma.mobile.ui.screens.routines
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -37,6 +37,7 @@ fun RoutineListScreen(
     currentRoute: String,
     onNavigate: (String) -> Unit,
     onRoutineClick: (Routine) -> Unit,
+    onRoutineLongClick: (Routine) -> Unit,
     onCreateRoutineClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -61,6 +62,7 @@ fun RoutineListScreen(
                 RoutineCard(
                     routine = routine,
                     onClick = { onRoutineClick(routine) },
+                    onLongClick = { onRoutineLongClick(routine) },
                     onToggle = { activada ->
                         routines = routines.map {
                             if (it.id == routine.id) it.copy(enabled = activada) else it
@@ -94,6 +96,7 @@ fun RoutineListScreen(
 private fun RoutineCard(
     routine: Routine,
     onClick: () -> Unit,
+    onLongClick: () -> Unit,
     onToggle: (Boolean) -> Unit
 ) {
     val fondo = if (routine.enabled) VitalarmaColors.fondoCapa else VitalarmaColors.fondoPagina
@@ -105,7 +108,7 @@ private fun RoutineCard(
             .fillMaxWidth()
             .background(fondo, VitalarmaShapes.None)
             .border(Dimens.BorderThin, VitalarmaColors.bordeSutil, VitalarmaShapes.None)
-            .clickable { onClick() }
+            .combinedClickable(onClick = onClick, onLongClick = onLongClick)
             .padding(Dimens.SpacingBase),
         verticalAlignment = Alignment.CenterVertically
     ) {
