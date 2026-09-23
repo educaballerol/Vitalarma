@@ -46,6 +46,6 @@ data class Routine(
 
 val sampleRoutines = listOf(
     Routine(id = "1", name = "Día de oficina", alarmCount = 4, daysLabel = "Lun a Vie"),
-    Routine(id = "2", name = "Día de estudio", alarmCount = 3, daysLabel = "Sáb y Dom"),
+    Routine(id = "2", name = "Día de estudio", alarmCount = 3, daysLabel = "Sáb y Dom", enabled = false),
     Routine(id = "3", name = "Entrenamiento", alarmCount = 2, daysLabel = "Mar y Jue")
 )
