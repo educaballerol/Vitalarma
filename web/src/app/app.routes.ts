@@ -22,5 +22,10 @@ export const routes: Routes = [
     title: 'Nueva alarma · Vitalarma',
     loadComponent: () => import('./features/nueva-alarma/nueva-alarma').then((m) => m.NuevaAlarma),
   },
+  {
+    path: 'rutinas',
+    title: 'Rutinas · Vitalarma',
+    loadComponent: () => import('./features/rutinas/rutinas').then((m) => m.Rutinas),
+  },
   { path: '**', redirectTo: 'panel' },
 ];

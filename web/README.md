@@ -64,7 +64,8 @@ src/
         ├── panel/             # W-04
         ├── area/              # W-05
         ├── alarmas/           # W-07
-        └── nueva-alarma/      # W-09
+        ├── nueva-alarma/      # W-09
+        └── rutinas/           # W-10
 ```
 
 Al agregar una pantalla: un componente en `features/<pantalla>/`, su
@@ -81,7 +82,7 @@ commit por pantalla**.
 | W-07   | Tabla de todas las alarmas     | Humberto | W3 · Gestión escritorio | ✅     |
 | W-08   | Edición masiva                 | Eduardo  | W3 · Gestión escritorio | ⬜     |
 | W-09   | Crear alarma desde escritorio  | Eduardo  | W3 · Gestión escritorio | ✅     |
-| W-10   | Rutinas y bloques              | Eduardo  | W7 · Rutinas            | ⬜     |
+| W-10   | Rutinas y bloques              | Eduardo  | W7 · Rutinas            | ✅     |
 | W-11   | Editor de rutina y horarios    | Eduardo  | W7 · Rutinas            | ⬜     |
 
 Las pantallas de login (W-01 a W-03) quedan fuera a propósito: el
@@ -139,3 +140,23 @@ atributo en inputs de hora/fecha por especificación, y en su lugar
 muestran su propio formato de referencia cuando el campo está vacío.
 Ambas son limitaciones de plataforma, no diferencias de diseño
 intencionales.
+
+### Nota abierta: datos de ejemplo de W-10 no coinciden con otras pantallas
+
+Las alarmas que se ven en W-10 (agrupadas por rutina) usan datos
+locales propios de esta pantalla, que no necesariamente coinciden con
+los datos de ejemplo que se ven en W-07 (tabla de alarmas) — esto es
+intencional, no un error de datos compartidos rotos. El enunciado del
+proyecto establece que la entrega es una maquetación **no funcional**,
+sin backend ni persistencia real, así que cada pantalla usa datos de
+ejemplo independientes según lo que necesite mostrar.
+
+### Nota abierta: arrastrar y soltar en W-10 (solo mouse)
+
+Reordenar alarmas entre rutinas usa el HTML5 Drag and Drop API nativo
+del navegador, sin librerías. Funciona con mouse en cualquier
+navegador de escritorio, pero **no responde a gestos táctiles** — en
+un celular o tablet el ícono de arrastre no hace nada. Como esta es la
+maqueta web (pensada para escritorio), no debería ser un problema para
+la demo, pero para aclarar si el tutor la prueba desde un dispositivo
+táctil, el reordenamiento simplemente no va a funcionar.

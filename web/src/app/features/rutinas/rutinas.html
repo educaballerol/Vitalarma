@@ -1,0 +1,100 @@
+<app-top-bar />
+
+<main class="rutinas">
+  <div class="rutinas__encabezado">
+    <div>
+      <h1 class="rutinas__titulo">Rutinas</h1>
+      <p class="rutinas__subtitulo">
+        Un interruptor enciende o apaga todas las alarmas de la rutina.
+      </p>
+    </div>
+    <button type="button" class="boton boton--primario" (click)="nuevaRutina()">
+      + Nueva rutina
+    </button>
+  </div>
+
+  @for (rutina of rutinas; track rutina.id) {
+    <section class="tarjeta-rutina">
+      <div class="tarjeta-rutina__cabecera">
+        <div class="tarjeta-rutina__titulos">
+          <p class="tarjeta-rutina__nombre">{{ rutina.nombre }}</p>
+          <p class="tarjeta-rutina__conteo">{{ rutina.alarmas.length }} alarmas</p>
+        </div>
+
+        <div class="dias">
+          @for (dia of diasDe(rutina.id); track dia.etiqueta; let i = $index) {
+            <label class="dia" [class.es-activo]="dia.activo">
+              <input
+                type="checkbox"
+                class="solo-lectores"
+                [checked]="dia.activo"
+                (change)="alternarDia(rutina.id, i)"
+              />
+              {{ dia.etiqueta }}
+            </label>
+          }
+        </div>
+
+        <span class="tarjeta-rutina__aire"></span>
+
+        <label class="interruptor">
+          <input
+            type="checkbox"
+            class="solo-lectores"
+            [checked]="estaActiva(rutina.id)"
+            (change)="alternarActiva(rutina.id)"
+            [attr.aria-label]="'Activar o apagar ' + rutina.nombre"
+          />
+          <span class="interruptor__riel"></span>
+        </label>
+
+        <button type="button" class="boton boton--secundario" (click)="editar(rutina.id)">
+          Editar
+        </button>
+      </div>
+
+      <ul
+        class="alarmas-rutina"
+        (dragover)="permitirSoltar($event)"
+        (drop)="soltarEnLista(rutina.id, $event)"
+      >
+        @for (alarma of alarmasDe(rutina.id); track alarma.titulo; let i = $index) {
+          <li
+            class="alarmas-rutina__fila"
+            (dragstart)="iniciarArrastre(rutina.id, i, $event)"
+            (dragend)="quitarDraggable($event)"
+            (dragover)="permitirSoltar($event)"
+            (drop)="soltarEnFila(rutina.id, i, $event)"
+          >
+            <span
+              class="alarmas-rutina__icono"
+              aria-hidden="true"
+              (mousedown)="habilitarArrastre($event)"
+              (mouseup)="quitarDraggable($event)"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="4" y1="7" x2="20" y2="7" />
+                <line x1="4" y1="12" x2="20" y2="12" />
+                <line x1="4" y1="17" x2="20" y2="17" />
+              </svg>
+            </span>
+            <span class="alarmas-rutina__hora">{{ alarma.hora }}</span>
+            <span class="alarmas-rutina__titulo">{{ alarma.titulo }}</span>
+            <span class="etiqueta" [class]="'etiqueta--' + alarma.tipo">{{
+              etiquetaTipo[alarma.tipo]
+            }}</span>
+          </li>
+        }
+      </ul>
+    </section>
+  }
+
+  <p class="rutinas__ayuda">Arrastra una alarma de una rutina a otra para moverla.</p>
+</main>
