@@ -17,5 +17,10 @@ export const routes: Routes = [
     title: 'Detalle de área · Vitalarma',
     loadComponent: () => import('./features/area/area').then((m) => m.Area),
   },
+  {
+    path: 'alarmas/nueva',
+    title: 'Nueva alarma · Vitalarma',
+    loadComponent: () => import('./features/nueva-alarma/nueva-alarma').then((m) => m.NuevaAlarma),
+  },
   { path: '**', redirectTo: 'panel' },
 ];

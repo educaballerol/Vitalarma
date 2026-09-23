@@ -1,4 +1,5 @@
 import { Component, computed, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { TopBar } from '../../shared/top-bar/top-bar';
 import {
   ALARMAS,
@@ -13,7 +14,7 @@ import {
 
 @Component({
   selector: 'app-alarmas',
-  imports: [TopBar],
+  imports: [TopBar, RouterLink],
   templateUrl: './alarmas.html',
   styleUrl: './alarmas.scss',
 })
@@ -68,7 +69,8 @@ export class Alarmas {
   });
 
   readonly algunaVisibleMarcada = computed(
-    () => this.visibles().some((a) => this.seleccionadas().has(a.id)) && !this.todasVisiblesMarcadas(),
+    () =>
+      this.visibles().some((a) => this.seleccionadas().has(a.id)) && !this.todasVisiblesMarcadas(),
   );
 
   estaMarcada(id: string): boolean {

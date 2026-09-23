@@ -12,12 +12,12 @@ Proyecto del curso de UX Design — Maestría en Ingeniería de Software
 
 ## Frameworks y versiones
 
-| Herramienta  | Versión |
-| ------------ | ------- |
-| Angular      | 22.1    |
-| TypeScript   | 6.0     |
-| Node.js      | 24 LTS  |
-| Estilos      | SCSS    |
+| Herramienta | Versión |
+| ----------- | ------- |
+| Angular     | 22.1    |
+| TypeScript  | 6.0     |
+| Node.js     | 24 LTS  |
+| Estilos     | SCSS    |
 
 Componentes **standalone** con la sintaxis de control de flujo nueva
 (`@for`, `@if`) y `signal()` / `computed()` para el estado. Sin
@@ -39,6 +39,14 @@ npm run build   # compilado de producción en dist/
 se sube es `package-lock.json`, que es lo que garantiza que a todos nos
 instale las mismas versiones.
 
+## Tipografía
+
+IBM Plex Sans (texto de interfaz) + IBM Plex Mono (datos numéricos),
+servidas desde Google Fonts (`<link>` en `src/index.html`) en vez de
+archivos locales. Si el entorno de evaluación no tiene internet, el
+texto cae al stack de respaldo definido en `--fuente-sans`/`--fuente-mono`
+de `_tokens.scss`, no se rompe, pero no se ve IBM Plex.
+
 ## Estructura
 
 ```
@@ -55,7 +63,8 @@ src/
     └── features/
         ├── panel/             # W-04
         ├── area/              # W-05
-        └── alarmas/           # W-07
+        ├── alarmas/           # W-07
+        └── nueva-alarma/      # W-09
 ```
 
 Al agregar una pantalla: un componente en `features/<pantalla>/`, su
@@ -64,16 +73,16 @@ commit por pantalla**.
 
 ## Pantallas implementadas
 
-| Código | Pantalla                      | Requerimiento          | Estado |
-| ------ | ----------------------------- | ---------------------- | ------ |
-| W-04   | Panel de tiempo por área      | W2 · Estadísticas      | ✅     |
-| W-05   | Detalle de un área e histórico | W2 · Estadísticas      | ✅     |
-| W-06   | Exportar reporte (modal)      | W6 · Reportes PDF      | ✅     |
-| W-07   | Tabla de todas las alarmas    | W3 · Gestión escritorio | ✅     |
-| W-08   | Edición masiva                | W3 · Gestión escritorio | ⬜     |
-| W-09   | Crear alarma desde escritorio | W3 · Gestión escritorio | ⬜     |
-| W-10   | Rutinas y bloques             | W7 · Rutinas           | ⬜     |
-| W-11   | Editor de rutina y horarios   | W7 · Rutinas           | ⬜     |
+| Código | Pantalla                       | Autor    | Requerimiento           | Estado |
+| ------ | ------------------------------ | -------- | ----------------------- | ------ |
+| W-04   | Panel de tiempo por área       | Humberto | W2 · Estadísticas       | ✅     |
+| W-05   | Detalle de un área e histórico | Humberto | W2 · Estadísticas       | ✅     |
+| W-06   | Exportar reporte (modal)       | Humberto | W6 · Reportes PDF       | ✅     |
+| W-07   | Tabla de todas las alarmas     | Humberto | W3 · Gestión escritorio | ✅     |
+| W-08   | Edición masiva                 | Eduardo  | W3 · Gestión escritorio | ⬜     |
+| W-09   | Crear alarma desde escritorio  | Eduardo  | W3 · Gestión escritorio | ✅     |
+| W-10   | Rutinas y bloques              | Eduardo  | W7 · Rutinas            | ⬜     |
+| W-11   | Editor de rutina y horarios    | Eduardo  | W7 · Rutinas            | ⬜     |
 
 Las pantallas de login (W-01 a W-03) quedan fuera a propósito: el
 entregable es solo el flujo principal.
@@ -81,7 +90,7 @@ entregable es solo el flujo principal.
 ## Design system
 
 Los tokens de `src/styles/_tokens.scss` salen del Figma
-(*Design System - Web*, nodo `2105:3858`) y son los mismos que el
+(_Design System - Web_, nodo `2105:3858`) y son los mismos que el
 módulo mobile tiene en `ui/theme/Color.kt` y `Type.kt`. **Nunca
 escribas un hex suelto en un componente**: si falta un token, agrégalo
 al archivo con su nombre semántico.
@@ -116,3 +125,17 @@ la misma rampa que llegan a 3:1.
 
 Queda pendiente decidir en Figma si se agrega una paleta categórica
 propia para las áreas.
+
+### Nota abierta: campo de hora nativo (W-09)
+
+El campo "Hora" usa `<input type="time">` nativo, sin JS adicional
+encima: el gesto de apertura es el nativo de cada navegador (clic en
+el ícono, o escribir los dígitos directamente). El ícono se dejó tal
+como lo renderiza cada motor — no se intentó ocultarlo ni
+unificarlo, porque Firefox no expone un pseudo-elemento equivalente a
+`::-webkit-calendar-picker-indicator` para eso. El `placeholder` del
+mockup ("hh:mm a.m.") tampoco se replica: los navegadores ignoran ese
+atributo en inputs de hora/fecha por especificación, y en su lugar
+muestran su propio formato de referencia cuando el campo está vacío.
+Ambas son limitaciones de plataforma, no diferencias de diseño
+intencionales.

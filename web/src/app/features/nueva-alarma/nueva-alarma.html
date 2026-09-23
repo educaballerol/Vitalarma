@@ -1,0 +1,162 @@
+<app-top-bar />
+
+<main class="nueva-alarma">
+  <p class="nueva-alarma__migas">
+    <a routerLink="/alarmas" class="nueva-alarma__migas-enlace">Alarmas</a
+    >&nbsp;&nbsp;/&nbsp;&nbsp;Nueva alarma
+  </p>
+
+  <div class="nueva-alarma__encabezado">
+    <h1 class="nueva-alarma__titulo">Nueva alarma</h1>
+    <p class="nueva-alarma__subtitulo">
+      Los tres pasos del celular caben aquí en una sola pantalla.
+    </p>
+  </div>
+
+  <div class="reparto">
+    <section class="tarjeta reparto__principal">
+      <div class="bloque">
+        <h2 class="bloque__titulo">Cuándo suena</h2>
+
+        <div class="fila-campos">
+          <label class="campo campo--hora">
+            <span class="campo__etiqueta">Hora</span>
+            <input type="time" [value]="hora()" (input)="escribirHora($event)" />
+          </label>
+
+          <label class="campo campo--flex">
+            <span class="campo__etiqueta">Título de la alarma</span>
+            <input
+              type="text"
+              placeholder="Nombra tu alarma"
+              [value]="titulo()"
+              (input)="escribirTitulo($event)"
+            />
+          </label>
+        </div>
+
+        <div class="dias">
+          @for (dia of dias(); track dia.etiqueta; let i = $index) {
+            <label class="dia" [class.es-activo]="dia.activo">
+              <input
+                type="checkbox"
+                class="solo-lectores"
+                [checked]="dia.activo"
+                (change)="alternarDia(i)"
+              />
+              {{ dia.etiqueta }}
+            </label>
+          }
+        </div>
+        <p class="ayuda">Lunes a viernes</p>
+      </div>
+
+      <div class="bloque">
+        <h2 class="bloque__titulo">Qué tipo es</h2>
+        <div class="tipos">
+          @for (t of tipos; track t) {
+            <label
+              class="opcion tipo-tarjeta"
+              [class]="'tipo-tarjeta--' + t"
+              [class.es-elegida]="tipo() === t"
+            >
+              <input
+                type="radio"
+                class="radio"
+                name="tipo"
+                [checked]="tipo() === t"
+                (change)="elegirTipo(t)"
+              />
+              <div class="tipo-tarjeta__texto">
+                <span class="tipo-tarjeta__titulo">{{ etiquetaTipo[t] }}</span>
+                <span class="tipo-tarjeta__detalle">{{ detalleTipo[t] }}</span>
+              </div>
+            </label>
+          }
+        </div>
+      </div>
+    </section>
+
+    <aside class="reparto__lateral">
+      <section class="tarjeta">
+        <h2 class="bloque__titulo">Cómo se apaga</h2>
+        <select (change)="elegirApagado($event)">
+          @for (opcion of opcionesApagado; track opcion) {
+            <option [value]="opcion" [selected]="comoSeApaga() === opcion">{{ opcion }}</option>
+          }
+        </select>
+        <p class="ayuda">Solo aplica a las alarmas críticas.</p>
+      </section>
+
+      <section class="tarjeta">
+        <h2 class="bloque__titulo">Respaldo si no respondes</h2>
+        <ul class="respaldos">
+          @for (item of respaldos; track item.nombre) {
+            <li class="respaldos__fila">
+              <span class="respaldos__icono">
+                @if (item.tipo === 'dispositivo') {
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect x="6" y="2" width="12" height="20" rx="2" />
+                    <line x1="11" y1="18" x2="13" y2="18" />
+                  </svg>
+                } @else {
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="8" r="3.5" />
+                    <path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" />
+                  </svg>
+                }
+              </span>
+              <span class="respaldos__nombre">{{ item.nombre }}</span>
+              <span class="respaldos__demora">{{ item.demora }}</span>
+            </li>
+          }
+        </ul>
+      </section>
+
+      <section class="tarjeta">
+        <h2 class="bloque__titulo">Organización</h2>
+
+        <label class="campo">
+          <span class="campo__etiqueta">Rutina</span>
+          <select (change)="elegirRutina($event)">
+            @for (r of rutinas; track r) {
+              <option [value]="r" [selected]="rutina() === r">{{ r }}</option>
+            }
+          </select>
+        </label>
+
+        <label class="campo">
+          <span class="campo__etiqueta">Área de vida</span>
+          <select (change)="elegirArea($event)">
+            @for (a of areas; track a) {
+              <option [value]="a" [selected]="area() === a">{{ a }}</option>
+            }
+          </select>
+        </label>
+      </section>
+    </aside>
+  </div>
+
+  <div class="acciones">
+    <button type="button" class="boton boton--primario" (click)="crearAlarma()">
+      Crear alarma
+    </button>
+    <button type="button" class="boton boton--secundario" (click)="cancelar()">Cancelar</button>
+  </div>
+</main>
