@@ -61,7 +61,8 @@ src/
     │   └── rutina.model.ts    # compartido entre W-10 y W-11
     ├── shared/                # componentes usados por varias pantallas
     │   ├── top-bar/           # BarraSuperior (va en todas las pantallas)
-    │   └── dialogo-exportar/  # W-06, modal que abre desde W-05
+    │   ├── dialogo-exportar/  # W-06, modal que abre desde W-05
+    │   └── acciones-bloque/   # W-08, barra de edición masiva (usada por alarmas/)
     └── features/
         ├── panel/             # W-04
         ├── area/              # W-05
@@ -83,7 +84,7 @@ commit por pantalla**.
 | W-05   | Detalle de un área e histórico | Humberto | W2 · Estadísticas       | ✅     |
 | W-06   | Exportar reporte (modal)       | Humberto | W6 · Reportes PDF       | ✅     |
 | W-07   | Tabla de todas las alarmas     | Humberto | W3 · Gestión escritorio | ✅     |
-| W-08   | Edición masiva                 | Eduardo  | W3 · Gestión escritorio | ⬜     |
+| W-08   | Edición masiva (componente)    | Eduardo  | W3 · Gestión escritorio | ✅     |
 | W-09   | Crear alarma desde escritorio  | Eduardo  | W3 · Gestión escritorio | ✅     |
 | W-10   | Rutinas y bloques              | Eduardo  | W7 · Rutinas            | ✅     |
 | W-11   | Editor de rutina y horarios    | Eduardo  | W7 · Rutinas            | ✅     |
@@ -129,6 +130,17 @@ la misma rampa que llegan a 3:1.
 
 Queda pendiente decidir en Figma si se agrega una paleta categórica
 propia para las áreas.
+
+### Nota: W-08 no es una ruta, es un componente condicional en W-07
+
+"Edición masiva" no tiene URL propia — es la barra negra fija al fondo
+de la pantalla (`shared/acciones-bloque/`) que aparece dentro de
+`Alarmas` cuando `totalSeleccionadas() > 0`. No cuenta como pantalla
+para el límite de 3 por estudiante porque no es una ruta ni un frame
+navegable independiente, es un estado de la tabla que ya existía. Los
+tres botones de acción (Cambiar tipo, Mover a rutina, Eliminar) son
+interactivos pero no ejecutan ninguna lógica real, consistente con el
+resto del proyecto.
 
 ### Nota abierta: campo de hora nativo (W-09)
 

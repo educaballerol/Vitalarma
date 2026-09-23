@@ -1,0 +1,21 @@
+<div class="acciones-bloque">
+  <div class="acciones-bloque__resumen">
+    <p class="acciones-bloque__conteo">
+      {{ total() }}
+      @if (total() === 1) {
+        alarma seleccionada
+      } @else {
+        alarmas seleccionadas
+      }
+    </p>
+    <button type="button" class="acciones-bloque__deseleccionar" (click)="deseleccionarTodo.emit()">
+      Deseleccionar todo
+    </button>
+  </div>
+
+  <span class="acciones-bloque__aire"></span>
+
+  <button type="button" class="boton-oscuro" (click)="cambiarTipo.emit()">Cambiar tipo</button>
+  <button type="button" class="boton-oscuro" (click)="moverARutina.emit()">Mover a rutina</button>
+  <button type="button" class="boton boton--peligro" (click)="eliminar.emit()">Eliminar</button>
+</div>

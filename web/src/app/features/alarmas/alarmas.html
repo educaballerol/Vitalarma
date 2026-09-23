@@ -125,4 +125,13 @@
       @if (totalSeleccionadas() === 1) { fila seleccionada } @else { filas seleccionadas }
     }
   </p>
+  @if (totalSeleccionadas() > 0) {
+    <app-acciones-bloque
+      [total]="totalSeleccionadas()"
+      (deseleccionarTodo)="deseleccionarTodo()"
+      (cambiarTipo)="cambiarTipo()"
+      (moverARutina)="moverARutina()"
+      (eliminar)="eliminar()"
+    />
+  }
 </main>

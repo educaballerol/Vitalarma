@@ -11,10 +11,11 @@ import {
   type EstadoActivacion,
   type TipoAlarma,
 } from '../../models/alarma.model';
+import { AccionesBloque } from '../../shared/acciones-bloque/acciones-bloque';
 
 @Component({
   selector: 'app-alarmas',
-  imports: [TopBar, RouterLink],
+  imports: [TopBar, RouterLink, AccionesBloque],
   templateUrl: './alarmas.html',
   styleUrl: './alarmas.scss',
 })
@@ -121,5 +122,22 @@ export class Alarmas {
 
   elegirEstado(evento: Event): void {
     this.filtroEstado.set((evento.target as HTMLSelectElement).value as EstadoActivacion | '');
+  }
+
+  deseleccionarTodo(): void {
+    this.seleccionadas.set(new Set());
+  }
+
+  cambiarTipo(): void {
+    // Maquetación: activo e interactivo, sin lógica real detrás.
+  }
+
+  moverARutina(): void {
+    // Maquetación: activo e interactivo, sin lógica real detrás.
+  }
+
+  eliminar(): void {
+    // Maquetación: activo e interactivo, sin lógica real detrás.
+    // No borra de ALARMAS (es un array estático de solo lectura, no un signal).
   }
 }

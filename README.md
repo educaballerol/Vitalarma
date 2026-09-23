@@ -13,6 +13,13 @@ Software (MISO), desarrollado en pareja (binomio).
 > backend ni lógica de negocio real, tal como lo exigen las condiciones
 > del proyecto del curso.
 
+## Autores
+
+Trabajo en binomio para el curso de UX Design (MISO):
+
+- **Eduardo Caballero**
+- **Humberto Rueda**
+
 ## Estructura del repositorio
 
 ```
@@ -21,17 +28,14 @@ Vitalarma/
 └── mobile/    # Frontend mobile — Android / Jetpack Compose
 ```
 
-Cada carpeta tiene su propio README con detalles técnicos, guía de
-instalación y estado de las pantallas implementadas:
+Cada carpeta es independiente y tiene su propio README con:
+
+- **requisitos** (versión de herramientas necesarias),
+- **instrucciones de instalación y ejecución**,
+- y el **estado de las pantallas implementadas** por autor.
+
+No hay instrucciones de build/instalación aquí en el README raíz a
+propósito — revisa el README de la plataforma que te interese:
 
 - [`web/README.md`](./web/README.md)
 - [`mobile/README.md`](./mobile/README.md)
-
-## Diseño
-
-El sistema de diseño está basado en **IBM Carbon** personalizado: paleta
-cálida ámbar/naranja/café, tipografía IBM Plex Sans (texto general) +
-IBM Plex Mono (datos numéricos), esquinas rectas con excepciones
-documentadas (interruptores en forma de pastilla, selectores circulares
-de día/tipo). El archivo de diseño (Figma) contiene los wireframes, el
-Design System y los prototipos interactivos de ambas plataformas.

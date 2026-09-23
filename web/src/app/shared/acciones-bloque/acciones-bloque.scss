@@ -1,0 +1,78 @@
+.acciones-bloque {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--esp-base);
+  padding: var(--esp-base) var(--margen-lateral);
+  background: var(--gris-100);
+  color: white;
+}
+
+.acciones-bloque__resumen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2xs);
+  white-space: nowrap;
+}
+
+.acciones-bloque__conteo {
+  font-size: var(--fs-menor);
+  font-weight: 600;
+  color: white;
+}
+
+.acciones-bloque__deseleccionar {
+  border: 0;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: var(--fs-etiqueta);
+  color: var(--gris-40);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.acciones-bloque__aire {
+  flex: 1 1 auto;
+}
+
+.boton-oscuro {
+  height: var(--alto-boton);
+  padding: 0 var(--esp-base);
+  border: 1px solid var(--gris-40);
+  background: transparent;
+  color: white;
+  font-family: inherit;
+  font-size: var(--fs-cuerpo);
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.boton {
+  height: var(--alto-boton);
+  padding: 0 var(--esp-base);
+  border: 1px solid transparent;
+  border-radius: var(--radio-none);
+  font-family: inherit;
+  font-size: var(--fs-cuerpo);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.boton--peligro {
+  background: var(--soporte-error);
+  color: white;
+  font-weight: 600;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+}
