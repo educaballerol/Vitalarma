@@ -1,67 +1,13 @@
 import { Component, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { TopBar } from '../../shared/top-bar/top-bar';
-import { ETIQUETA_TIPO, type TipoAlarma } from '../../models/alarma.model';
-
-interface DiaSemana {
-  etiqueta: string;
-  activo: boolean;
-}
-
-interface AlarmaRutina {
-  hora: string;
-  titulo: string;
-  tipo: TipoAlarma;
-}
-
-interface RutinaResumen {
-  id: string;
-  nombre: string;
-  dias: DiaSemana[];
-  alarmas: AlarmaRutina[];
-}
+import { RUTINAS_RESUMEN, type AlarmaRutina, type DiaSemana } from '../../models/rutina.model';
+import { ETIQUETA_TIPO } from '../../models/alarma.model';
 
 interface ArrastreAlarma {
   rutinaId: string;
   indice: number;
 }
-
-const RUTINAS_RESUMEN: readonly RutinaResumen[] = [
-  {
-    id: 'oficina',
-    nombre: 'Día de oficina',
-    dias: [
-      { etiqueta: 'Lun', activo: true },
-      { etiqueta: 'Mar', activo: true },
-      { etiqueta: 'Mié', activo: true },
-      { etiqueta: 'Jue', activo: true },
-      { etiqueta: 'Vie', activo: true },
-      { etiqueta: 'Sáb', activo: false },
-      { etiqueta: 'Dom', activo: false },
-    ],
-    alarmas: [
-      { hora: '6:00', titulo: 'Salir hacia la oficina', tipo: 'critica' },
-      { hora: '13:30', titulo: 'Reunión con el cliente', tipo: 'cauta' },
-      { hora: '17:00', titulo: 'Salir hacia la clase', tipo: 'critica' },
-    ],
-  },
-  {
-    id: 'estudio',
-    nombre: 'Día de estudio',
-    dias: [
-      { etiqueta: 'Lun', activo: false },
-      { etiqueta: 'Mar', activo: false },
-      { etiqueta: 'Mié', activo: false },
-      { etiqueta: 'Jue', activo: false },
-      { etiqueta: 'Vie', activo: false },
-      { etiqueta: 'Sáb', activo: true },
-      { etiqueta: 'Dom', activo: true },
-    ],
-    alarmas: [
-      { hora: '9:00', titulo: 'Bloque de lectura', tipo: 'recordatorio' },
-      { hora: '15:00', titulo: 'Entrega de UX', tipo: 'recordatorio' },
-    ],
-  },
-];
 
 @Component({
   selector: 'app-rutinas',
@@ -86,6 +32,8 @@ export class Rutinas {
   );
 
   private arrastrando: ArrastreAlarma | null = null;
+
+  constructor(private router: Router) {}
 
   estaActiva(id: string): boolean {
     return this.activas()[id];
@@ -165,10 +113,10 @@ export class Rutinas {
   }
 
   editar(id: string): void {
-    // Maquetación: pendiente conectar a W-11 (editor de rutina) cuando exista esa ruta.
+    this.router.navigate(['/rutinas', id, 'editar']);
   }
 
   nuevaRutina(): void {
-    // Maquetación: sin backend, no crea nada. Destino final sin definir.
+    this.router.navigate(['/rutinas/nueva']);
   }
 }

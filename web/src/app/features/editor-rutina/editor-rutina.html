@@ -1,0 +1,131 @@
+<app-top-bar />
+
+<main class="editor-rutina">
+  <p class="editor-rutina__migas">
+    <a routerLink="/rutinas" class="editor-rutina__migas-enlace">Rutinas</a
+    >&nbsp;&nbsp;/&nbsp;&nbsp;{{ esNueva ? 'Nueva rutina' : nombre() }}
+  </p>
+
+  <h1 class="editor-rutina__titulo">{{ esNueva ? 'Nueva rutina' : nombre() }}</h1>
+
+  <div class="reparto">
+    <aside class="reparto__lateral">
+      <section class="tarjeta">
+        <p class="bloque__titulo">Nombre y días</p>
+
+        <label class="campo">
+          <span class="campo__etiqueta">Nombre de la rutina</span>
+          <input
+            type="text"
+            placeholder="Nombra tu rutina"
+            [value]="nombre()"
+            (input)="escribirNombre($event)"
+          />
+        </label>
+
+        <div class="dias">
+          @for (dia of dias(); track dia.etiqueta; let i = $index) {
+            <label class="dia" [class.es-activo]="dia.activo">
+              <input
+                type="checkbox"
+                class="solo-lectores"
+                [checked]="dia.activo"
+                (change)="alternarDia(i)"
+              />
+              {{ dia.etiqueta }}
+            </label>
+          }
+        </div>
+      </section>
+
+      <section class="tarjeta">
+        <div class="estado__fila">
+          <p class="estado__titulo">Rutina activa</p>
+          <label class="interruptor">
+            <input
+              type="checkbox"
+              class="solo-lectores"
+              [checked]="activa()"
+              (change)="alternarActiva()"
+            />
+            <span class="interruptor__riel"></span>
+          </label>
+        </div>
+        <p class="ayuda">
+          Esta rutina controla {{ alarmas().length }}
+          @if (alarmas().length === 1) {
+            alarma.
+          } @else {
+            alarmas.
+          }
+          Apagarla silencia
+          @if (alarmas().length === 1) {
+            esa alarma.
+          } @else {
+            las {{ alarmas().length }} a la vez.
+          }
+        </p>
+      </section>
+    </aside>
+
+    <section class="tarjeta reparto__principal">
+      <p class="bloque__titulo">Alarmas de esta rutina</p>
+
+      <ul class="alarmas-rutina">
+        @for (alarma of alarmas(); track alarma.id) {
+          <li class="alarmas-rutina__fila">
+            <span class="alarmas-rutina__icono" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="4" y1="7" x2="20" y2="7" />
+                <line x1="4" y1="12" x2="20" y2="12" />
+                <line x1="4" y1="17" x2="20" y2="17" />
+              </svg>
+            </span>
+            <span class="alarmas-rutina__hora">{{ alarma.hora }}</span>
+            <span class="alarmas-rutina__titulo">{{ alarma.titulo }}</span>
+            <span class="etiqueta" [class]="'etiqueta--' + alarma.tipo">{{
+              etiquetaTipo[alarma.tipo]
+            }}</span>
+            <button type="button" class="quitar" (click)="quitarAlarma(alarma.id)">Quitar</button>
+          </li>
+        } @empty {
+          <li class="alarmas-rutina__vacia">Esta rutina todavía no tiene alarmas.</li>
+        }
+      </ul>
+
+      @if (mostrandoSelector()) {
+        <div class="selector-alarma">
+          <select (change)="elegirAlarmaParaAgregar($event)">
+            @for (alarma of alarmasDisponibles(); track alarma.id) {
+              <option [value]="alarma.id" [selected]="alarmaParaAgregar() === alarma.id">
+                {{ alarma.hora }} — {{ alarma.titulo }}
+              </option>
+            }
+          </select>
+          <button type="button" class="boton boton--primario" (click)="confirmarAgregar()">
+            Agregar
+          </button>
+          <button type="button" class="boton boton--secundario" (click)="cerrarSelector()">
+            Cancelar
+          </button>
+        </div>
+      } @else {
+        <button type="button" class="boton boton--contorno" (click)="abrirSelector()">
+          + Agregar una alarma existente
+        </button>
+      }
+    </section>
+  </div>
+
+  <div class="acciones">
+    <button type="button" class="boton boton--primario" (click)="guardar()">Guardar rutina</button>
+    <button type="button" class="boton boton--secundario" (click)="cancelar()">Cancelar</button>
+  </div>
+</main>

@@ -58,7 +58,7 @@
         (dragover)="permitirSoltar($event)"
         (drop)="soltarEnLista(rutina.id, $event)"
       >
-        @for (alarma of alarmasDe(rutina.id); track alarma.titulo; let i = $index) {
+        @for (alarma of alarmasDe(rutina.id); track alarma.id; let i = $index) {
           <li
             class="alarmas-rutina__fila"
             (dragstart)="iniciarArrastre(rutina.id, i, $event)"

@@ -27,5 +27,17 @@ export const routes: Routes = [
     title: 'Rutinas · Vitalarma',
     loadComponent: () => import('./features/rutinas/rutinas').then((m) => m.Rutinas),
   },
+  {
+    path: 'rutinas/nueva',
+    title: 'Nueva rutina · Vitalarma',
+    loadComponent: () =>
+      import('./features/editor-rutina/editor-rutina').then((m) => m.EditorRutina),
+  },
+  {
+    path: 'rutinas/:id/editar',
+    title: 'Editar rutina · Vitalarma',
+    loadComponent: () =>
+      import('./features/editor-rutina/editor-rutina').then((m) => m.EditorRutina),
+  },
   { path: '**', redirectTo: 'panel' },
 ];

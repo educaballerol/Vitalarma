@@ -57,6 +57,8 @@ src/
 └── app/
     ├── app.routes.ts          # una ruta por pantalla, con su código W-xx
     ├── models/                # tipos + datos de ejemplo
+    │   ├── alarma.model.ts
+    │   └── rutina.model.ts    # compartido entre W-10 y W-11
     ├── shared/                # componentes usados por varias pantallas
     │   ├── top-bar/           # BarraSuperior (va en todas las pantallas)
     │   └── dialogo-exportar/  # W-06, modal que abre desde W-05
@@ -65,7 +67,8 @@ src/
         ├── area/              # W-05
         ├── alarmas/           # W-07
         ├── nueva-alarma/      # W-09
-        └── rutinas/           # W-10
+        ├── rutinas/           # W-10
+        └── editor-rutina/     # W-11
 ```
 
 Al agregar una pantalla: un componente en `features/<pantalla>/`, su
@@ -83,7 +86,7 @@ commit por pantalla**.
 | W-08   | Edición masiva                 | Eduardo  | W3 · Gestión escritorio | ⬜     |
 | W-09   | Crear alarma desde escritorio  | Eduardo  | W3 · Gestión escritorio | ✅     |
 | W-10   | Rutinas y bloques              | Eduardo  | W7 · Rutinas            | ✅     |
-| W-11   | Editor de rutina y horarios    | Eduardo  | W7 · Rutinas            | ⬜     |
+| W-11   | Editor de rutina y horarios    | Eduardo  | W7 · Rutinas            | ✅     |
 
 Las pantallas de login (W-01 a W-03) quedan fuera a propósito: el
 entregable es solo el flujo principal.
@@ -160,3 +163,15 @@ un celular o tablet el ícono de arrastre no hace nada. Como esta es la
 maqueta web (pensada para escritorio), no debería ser un problema para
 la demo, pero para aclarar si el tutor la prueba desde un dispositivo
 táctil, el reordenamiento simplemente no va a funcionar.
+
+### Nota abierta: W-11 sirve tanto para crear como para editar
+
+`/rutinas/nueva` y `/rutinas/:id/editar` cargan el mismo componente
+(`EditorRutina`). Sin `id` en la ruta arranca vacío; con `id` busca la
+rutina en `RUTINAS_RESUMEN` (`models/rutina.model.ts`) y precarga sus
+datos. "Guardar rutina" no persiste nada, solo navega de vuelta a
+`/rutinas`, consistente con que toda la entrega es no funcional.
+
+El selector "+ Agregar una alarma existente" sí lee de datos reales:
+tira de `ALARMAS` (`models/alarma.model.ts`), el mismo array que usa
+la tabla de W-07, filtrando las que ya están en la rutina.
