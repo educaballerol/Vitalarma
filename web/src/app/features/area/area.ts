@@ -1,6 +1,7 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TopBar } from '../../shared/top-bar/top-bar';
+import { DialogoExportar } from '../../shared/dialogo-exportar/dialogo-exportar';
 import { ETIQUETA_ESTADO, detalleDe, type EstadoAlarma } from '../../models/area.model';
 
 interface Punto {
@@ -12,12 +13,14 @@ interface Punto {
 
 @Component({
   selector: 'app-area',
-  imports: [TopBar, RouterLink],
+  imports: [TopBar, RouterLink, DialogoExportar],
   templateUrl: './area.html',
   styleUrl: './area.scss',
 })
 export class Area {
   readonly id = input<string>();
+
+  readonly exportando = signal(false);
 
   readonly detalle = computed(() => detalleDe(this.id()));
 
@@ -79,6 +82,10 @@ export class Area {
     const v = this.variacion();
     return `${v > 0 ? '+' : ''}${v}%`;
   });
+
+  abrirExportar(): void {
+    this.exportando.set(true);
+  }
 
   etiquetaEstado(estado: EstadoAlarma): string {
     return ETIQUETA_ESTADO[estado];

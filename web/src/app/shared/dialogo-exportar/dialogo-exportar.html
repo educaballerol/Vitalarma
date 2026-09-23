@@ -1,0 +1,92 @@
+<dialog #dialogo class="dialogo" (close)="alCerrarse()" aria-labelledby="titulo-dialogo">
+  @if (!descargado()) {
+    <h2 id="titulo-dialogo" class="dialogo__titulo">Exportar reporte de {{ area() }}</h2>
+    <p class="dialogo__nota">Se descarga en tu equipo, no se envía por correo</p>
+
+    <div class="grupo">
+      <label class="grupo__etiqueta" for="periodo">Periodo</label>
+      <select id="periodo" class="campo" (change)="elegirPeriodo($event)">
+        @for (opcion of periodos; track opcion) {
+          <option [value]="opcion" [selected]="periodo() === opcion">{{ opcion }}</option>
+        }
+      </select>
+    </div>
+
+    <fieldset class="grupo">
+      <legend class="grupo__etiqueta">Incluir en el reporte</legend>
+
+      <label class="opcion">
+        <input type="checkbox" class="casilla" [checked]="incluyeGrafica()" (change)="alternarGrafica($event)" />
+        Gráfica de horas
+      </label>
+
+      <label class="opcion">
+        <input type="checkbox" class="casilla" [checked]="incluyeTabla()" (change)="alternarTabla($event)" />
+        Tabla de alarmas
+      </label>
+
+      <label class="opcion">
+        <input type="checkbox" class="casilla" [checked]="incluyeNotas()" (change)="alternarNotas($event)" />
+        Notas de voz
+      </label>
+    </fieldset>
+
+    <fieldset class="grupo">
+      <legend class="grupo__etiqueta">Formato</legend>
+
+      <div class="formatos">
+        <label class="opcion">
+          <input
+            type="radio"
+            name="formato"
+            class="radio"
+            [checked]="formato() === 'pdf'"
+            (change)="elegirFormato('pdf')"
+          />
+          PDF
+        </label>
+
+        <label class="opcion">
+          <input
+            type="radio"
+            name="formato"
+            class="radio"
+            [checked]="formato() === 'hoja'"
+            (change)="elegirFormato('hoja')"
+          />
+          Hoja de cálculo
+        </label>
+      </div>
+    </fieldset>
+
+    @if (nadaSeleccionado()) {
+      <p class="dialogo__aviso" role="alert">
+        Escoge al menos una cosa para incluir en el reporte.
+      </p>
+    }
+
+    <div class="dialogo__acciones">
+      <button type="button" class="boton boton--primario" [disabled]="nadaSeleccionado()" (click)="descargar()">
+        Descargar
+      </button>
+      <button type="button" class="boton boton--secundario" (click)="cerrar()">Cancelar</button>
+    </div>
+  } @else {
+    <div class="listo">
+      <p class="listo__marca" aria-hidden="true">✓</p>
+      <h2 id="titulo-dialogo" class="dialogo__titulo">Reporte descargado</h2>
+      <p class="dialogo__nota">{{ nombreArchivo() }}</p>
+
+      <ul class="listo__resumen">
+        <li>{{ area() }} · {{ periodo() }}</li>
+        @if (incluyeGrafica()) { <li>Gráfica de horas</li> }
+        @if (incluyeTabla()) { <li>Tabla de alarmas</li> }
+        @if (incluyeNotas()) { <li>Notas de voz</li> }
+      </ul>
+
+      <div class="dialogo__acciones">
+        <button type="button" class="boton boton--primario" (click)="cerrar()">Cerrar</button>
+      </div>
+    </div>
+  }
+</dialog>

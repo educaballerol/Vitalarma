@@ -66,6 +66,7 @@
         <th scope="col" class="tabla__casilla">
           <input
             type="checkbox"
+            class="casilla"
             [checked]="todasVisiblesMarcadas()"
             [indeterminate]="algunaVisibleMarcada()"
             (change)="alternarTodas()"
@@ -85,6 +86,7 @@
           <td class="tabla__casilla">
             <input
               type="checkbox"
+              class="casilla"
               [checked]="estaMarcada(alarma.id)"
               (change)="alternar(alarma.id)"
               [attr.aria-label]="'Marcar ' + alarma.titulo"

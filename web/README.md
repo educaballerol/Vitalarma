@@ -44,12 +44,14 @@ instale las mismas versiones.
 ```
 src/
 ├── styles/_tokens.scss        # tokens del design system (colores, tipografía, retícula)
+├── styles/_controles.scss     # casilla y radio, compartidos por todas las pantallas
 ├── styles.scss                # reset y estilos globales
 └── app/
     ├── app.routes.ts          # una ruta por pantalla, con su código W-xx
     ├── models/                # tipos + datos de ejemplo
     ├── shared/                # componentes usados por varias pantallas
-    │   └── top-bar/           # BarraSuperior (va en todas las pantallas)
+    │   ├── top-bar/           # BarraSuperior (va en todas las pantallas)
+    │   └── dialogo-exportar/  # W-06, modal que abre desde W-05
     └── features/
         ├── panel/             # W-04
         ├── area/              # W-05
@@ -66,7 +68,7 @@ commit por pantalla**.
 | ------ | ----------------------------- | ---------------------- | ------ |
 | W-04   | Panel de tiempo por área      | W2 · Estadísticas      | ✅     |
 | W-05   | Detalle de un área e histórico | W2 · Estadísticas      | ✅     |
-| W-06   | Exportar reporte (modal)      | W6 · Reportes PDF      | ⬜     |
+| W-06   | Exportar reporte (modal)      | W6 · Reportes PDF      | ✅     |
 | W-07   | Tabla de todas las alarmas    | W3 · Gestión escritorio | ✅     |
 | W-08   | Edición masiva                | W3 · Gestión escritorio | ⬜     |
 | W-09   | Crear alarma desde escritorio | W3 · Gestión escritorio | ⬜     |

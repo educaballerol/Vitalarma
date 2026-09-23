@@ -109,7 +109,13 @@
     </table>
 
     <div class="alarmas__acciones">
-      <button type="button" class="boton boton--primario">Exportar reporte</button>
+      <button type="button" class="boton boton--primario" (click)="abrirExportar()">
+        Exportar reporte
+      </button>
     </div>
   </section>
 </main>
+
+@if (exportando()) {
+  <app-dialogo-exportar [area]="detalle().nombre" (cerrado)="exportando.set(false)" />
+}
