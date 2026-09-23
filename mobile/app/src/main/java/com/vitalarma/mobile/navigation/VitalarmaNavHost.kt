@@ -18,6 +18,7 @@ import androidx.navigation.navArgument
 import com.vitalarma.mobile.model.sampleAlarms
 import com.vitalarma.mobile.ui.screens.alarms.AlarmDetailScreen
 import com.vitalarma.mobile.ui.screens.alarms.AlarmListScreen
+import com.vitalarma.mobile.ui.screens.alarms.CreateAlarmTimeScreen
 import com.vitalarma.mobile.ui.screens.alarms.DeleteAlarmScreen
 
 /**
@@ -45,7 +46,7 @@ fun VitalarmaNavHost(
                 currentRoute = Routes.ALARM_LIST,
                 onNavigate = { route -> navController.navigate(route) },
                 onAlarmClick = { alarm -> navController.navigate(Routes.alarmDetail(alarm.id)) },
-                onCreateAlarmClick = { navController.navigate(Routes.ALARM_TYPE_PICKER) },
+                onCreateAlarmClick = { navController.navigate(Routes.ALARM_TIME_PICKER) },
                 onTestCriticalClick = { navController.navigate(Routes.alarmRinging(sampleAlarms.first().id)) }
             )
         }
@@ -80,8 +81,16 @@ fun VitalarmaNavHost(
             )
         }
 
+        composable(Routes.ALARM_TIME_PICKER) {
+            CreateAlarmTimeScreen(
+                onBackClick = { navController.popBackStack() },
+                onNextClick = { _, _ -> navController.navigate(Routes.ALARM_TYPE_PICKER) },
+                onCreateReminderClick = {
+                    navController.popBackStack(Routes.ALARM_LIST, inclusive = false)
+                }
+            )
+        }
         composable(Routes.ALARM_TYPE_PICKER) { PlaceholderScreen("Escoge un tipo (flujo de creación)") }
-        composable(Routes.ALARM_TIME_PICKER) { PlaceholderScreen("Definir hora") }
         composable(Routes.ALARM_DETAILS_STEP) { PlaceholderScreen("Detalles") }
         composable(Routes.ALARM_CREATED) { PlaceholderScreen("Alarma creada") }
 
