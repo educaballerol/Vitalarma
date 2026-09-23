@@ -39,6 +39,9 @@ object VitalarmaColors {
 
     // Estado
     val estadoError = Color(0xFFDA1E28)
+    val estadoExito = Color(0xFF24A148)      // "Alarma cumplida" (M-13)
+    val estadoAdvertencia = Color(0xFFF1C21B)
+    val estadoInfo = Color(0xFF0043CE)
 
     // Tipo de alarma (color + texto por tipo — el color nunca es el único
     // portador de significado, la palabra del tipo siempre acompaña)
