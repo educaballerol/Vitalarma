@@ -16,9 +16,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.vitalarma.mobile.model.sampleAlarms
+import com.vitalarma.mobile.model.AlarmType
 import com.vitalarma.mobile.ui.screens.alarms.AlarmDetailScreen
 import com.vitalarma.mobile.ui.screens.alarms.AlarmListScreen
 import com.vitalarma.mobile.ui.screens.alarms.CreateAlarmTimeScreen
+import com.vitalarma.mobile.ui.screens.alarms.CreateAlarmTypeScreen
 import com.vitalarma.mobile.ui.screens.alarms.DeleteAlarmScreen
 
 /**
@@ -90,7 +92,15 @@ fun VitalarmaNavHost(
                 }
             )
         }
-        composable(Routes.ALARM_TYPE_PICKER) { PlaceholderScreen("Escoge un tipo (flujo de creación)") }
+        composable(Routes.ALARM_TYPE_PICKER) {
+            CreateAlarmTypeScreen(
+                onBackClick = { navController.popBackStack() },
+                onNextClick = { _: AlarmType -> navController.navigate(Routes.ALARM_DETAILS_STEP) },
+                onCancelClick = {
+                    navController.popBackStack(Routes.ALARM_LIST, inclusive = false)
+                }
+            )
+        }
         composable(Routes.ALARM_DETAILS_STEP) { PlaceholderScreen("Detalles") }
         composable(Routes.ALARM_CREATED) { PlaceholderScreen("Alarma creada") }
 
