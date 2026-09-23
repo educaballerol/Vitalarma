@@ -23,6 +23,7 @@ import com.vitalarma.mobile.ui.screens.alarms.AlarmListScreen
 import com.vitalarma.mobile.ui.screens.alarms.CreateAlarmTimeScreen
 import com.vitalarma.mobile.ui.screens.alarms.CreateAlarmTypeScreen
 import com.vitalarma.mobile.ui.screens.alarms.DeleteAlarmScreen
+import com.vitalarma.mobile.ui.screens.alarms.ScanObjectScreen
 
 /**
  * Punto único de navegación de la app.
@@ -117,7 +118,16 @@ fun VitalarmaNavHost(
                 onStopClick = { navController.navigate(Routes.alarmScanObject(alarm.id)) }
             )
         }
-        composable(Routes.ALARM_SCAN_OBJECT) { PlaceholderScreen("Escanea el objeto") }
+        composable(
+            route = Routes.ALARM_SCAN_OBJECT,
+            arguments = listOf(navArgument("alarmId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val alarmId = backStackEntry.arguments?.getString("alarmId")
+            val alarm = sampleAlarms.find { it.id == alarmId } ?: sampleAlarms.first()
+            ScanObjectScreen(
+                onScanSuccess = { navController.navigate(Routes.alarmCompleted(alarm.id)) }
+            )
+        }
         composable(Routes.ALARM_COMPLETED) { PlaceholderScreen("Alarma cumplida") }
         composable(Routes.BACKUP_TRIGGERED) { PlaceholderScreen("Respaldo activado") }
 
