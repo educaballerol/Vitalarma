@@ -159,33 +159,38 @@
   color: var(--texto-secundario);
 }
 
-.tipo {
+// Misma etiqueta rectangular que W-10 y W-11, para que el tipo se lea
+// igual en todas las pantallas (así está en el mockup).
+.etiqueta {
   display: inline-flex;
   align-items: center;
-  gap: var(--esp-xs);
-  white-space: nowrap;
-}
-
-.tipo__punto {
-  width: 10px;
-  height: 10px;
   flex-shrink: 0;
-  border-radius: 50%;
+  height: 20px;
+  padding: 0 var(--esp-xs);
+  font-size: var(--fs-etiqueta);
+  font-weight: 500;
+  letter-spacing: var(--ls-etiqueta);
+  text-transform: uppercase;
+  white-space: nowrap;
 
   &--critica {
     background: var(--tipo-critica);
+    color: white;
   }
 
   &--cauta {
     background: var(--tipo-cauta);
+    color: var(--texto-sobre-accion);
   }
 
   &--compartida {
     background: var(--tipo-compartida);
+    color: white;
   }
 
   &--recordatorio {
     background: var(--tipo-recordatorio);
+    color: var(--texto-sobre-accion);
   }
 }
 

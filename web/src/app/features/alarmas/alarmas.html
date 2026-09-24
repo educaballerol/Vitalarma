@@ -95,10 +95,9 @@
           <td class="tabla__hora">{{ alarma.hora }}</td>
           <td class="tabla__titulo">{{ alarma.titulo }}</td>
           <td>
-            <span class="tipo">
-              <span class="tipo__punto" [class]="'tipo__punto--' + alarma.tipo"></span>
-              {{ etiquetaTipo[alarma.tipo] }}
-            </span>
+            <span class="etiqueta" [class]="'etiqueta--' + alarma.tipo">{{
+              etiquetaTipo[alarma.tipo]
+            }}</span>
           </td>
           <td class="tabla__rutina">{{ alarma.rutina }}</td>
           <td>
